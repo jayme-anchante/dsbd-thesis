@@ -1,0 +1,258 @@
+%-----------------------------------------------------------------------
+%   Template para slides em Beamer do Curso de Especialiação em
+%   Data Science & Big Data - UFPR
+%
+%                                                   Prof. Walmes Zeviani
+%                                                       Vice-coordenador
+%-----------------------------------------------------------------------
+
+\documentclass{beamer}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+
+%-----------------------------------------------------------------------
+% Pacotes.
+
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{color}
+
+% Legenda de elementos flutuantes.
+\usepackage[hang]{caption}
+\captionsetup{
+  font=footnotesize,
+  labelfont=footnotesize,
+  labelsep=period}
+
+% Fontes.
+\usepackage[default]{lato}
+\usepackage{inconsolata}
+
+% Referências bibliográficas.
+\usepackage[
+  alf,
+  abnt-emphasize=bf,
+  abnt-etal-list=2,
+  abnt-and-type=&]{abntex2cite}
+% Usar \cite{<ref>} e \citeonline{<ref>}.
+
+%-----------------------------------------------------------------------
+% Configurações do Beamer, como cores e layout.
+
+\input{header.tex}
+
+%-----------------------------------------------------------------------
+% Meta dados do slide.
+
+\title[Modelo para Slides]{
+  \LARGE Modelo para Slides}
+
+\subtitle[Arquvos]{
+  \large Para arquivos \texttt{.tex} e \texttt{.Rnw}}
+
+\author[W. Zeviani]{
+ \textcolor{gray}{Prof. Walmes M. Zeviani}
+}
+
+\institute[]{
+  {\tiny Curso de Especialização em}\\
+  {Data Science \& Big Data}\\
+  {\tiny Universidade Federal do Paraná}}
+
+% \date[]{
+%   \textcolor{lightgrey}{2018/1}
+% }
+
+% Logo de canto e imagem de fundo.
+\logo{
+  \includegraphics[width=1.5cm]{../config/dsbd1x4.png}
+}
+\usebackgroundtemplate{
+  \includegraphics[height=\paperheight]{../config/ufpr-fundo-4x3.jpg}
+}
+
+%-----------------------------------------------------------------------
+% Configuração para fragmentos de código R usando knitr.
+
+% Slides que não irão usar fragmentos de código R, essa seção pode ser
+% removida sem prejuízos.
+
+% % Tamanho de fonte e distância entre linhas.
+% \renewenvironment{knitrout}{
+%   \renewcommand{\baselinestretch}{0.75}%\tiny
+% }{}
+
+<<setup, include=FALSE>>=
+library(knitr)
+
+# Define esquema de cores para code highlight.
+thm <- knit_theme$get("bclear")
+knit_theme$set(thm)
+
+# Controla execução e exibição de código R.
+opts_chunk$set(
+    size = "tiny",
+    cache = FALSE,
+    tidy = FALSE,
+    fig.width = 7,
+    fig.height = 5,
+    out.width = "0.8\\textwidth",
+    fig.align = "center",
+    eval.after= "fig.cap",
+    dev.args = list(family = "Helvetica", bg = "white"),
+    warning = FALSE,
+    error = FALSE,
+    message = FALSE)
+
+# Largura do texto de saída.
+options(width = 90)
+
+@
+
+%-----------------------------------------------------------------------
+%-----------------------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+%--------------------------------------------
+
+\begin{frame}
+  \begin{center}
+    \Huge{\textcolor{mandarina}{Preliminares}}
+  \end{center}
+\end{frame}
+
+%--------------------------------------------
+
+\begin{frame}
+
+  \begin{quote}
+    Data Scientist (n.): Person who is better at statistics than any
+    software engineer and better at software engineering than any
+    statistician.
+
+    \hfill Josh Wills
+  \end{quote}
+
+\end{frame}
+
+%--------------------------------------------
+
+\begin{frame}
+\frametitle{Lista de disciplinas da especialização}
+
+\begin{block}{Abreviaturas}
+  \begin{itemize}
+  \item Fundamentos para DSBD
+    \begin{itemize}
+    \item \textbf{ICP} Infraestrutura computational
+    \item \textbf{IES} Inferência estatística para ciência de dados
+    \item \textbf{LPG} Linguagens de programação para ciência de dados
+    \end{itemize}
+  \item Métodos contemporâneos em DSBD
+    \begin{itemize}
+    \item \textbf{PBD} Processamento de Big Data
+    \item \textbf{MES} Modelos estatísticos
+    \item \textbf{MML} Mineração de dados e aprendizagem de máquina
+    \item \textbf{MPQ} Métodos de pesquisa
+    \end{itemize}
+  \end{itemize}
+ \end{block}
+
+\end{frame}
+
+%--------------------------------------------
+
+\begin{frame}[fragile]
+\frametitle{Fragmento que exibe input/output}
+
+<<>>=
+# Um laço qualquer.
+x <- 0
+for (i in 1:5) {
+    x <- x + i^2
+}
+x
+
+# Usando `Reduce`.
+Reduce(f = function(x, y) { x + y^2 },
+       x = 0:5)
+
+# Operando vetorialmente.
+sum((0:5)^2)
+@
+
+\end{frame}
+
+%--------------------------------------------
+
+\begin{frame}[fragile]
+\frametitle{Fragmento que produz tabela}
+
+<<echo = FALSE, results = "asis">>=
+library(xtable)
+
+xt <- xtable(head(iris)[, 1:3],
+             caption = "Legenda para a tabela.")
+
+print(xt,
+      caption.placement = "top",
+      comment = FALSE)
+@
+
+\end{frame}
+
+%--------------------------------------------
+
+\begin{frame}[fragile]
+\frametitle{Fragmento que produz figura}
+
+<<echo = FALSE, fig.cap = "Caption da figura.">>=
+plot(dist ~ speed, data = cars)
+@
+
+\end{frame}
+
+%--------------------------------------------
+
+\begin{frame}[fragile]
+\frametitle{Fazendo citações}
+
+\begin{itemize}
+\item Citação em explícita: ``Conforme \citeonline{banzatto}, a unidade
+  experimental ...''
+\item Citação em implicita: ``... a importância da blocagem no
+  experimento \cite{banzatto}.''
+\end{itemize}
+
+Para as referências aparecerem é necessário executar \texttt{bibtex}.
+
+\begin{verbatim}
+pdflatex slides.tex
+bibtex slides
+bibtex slides
+bibtex slides
+pdflatex slides.tex
+\end{verbatim}
+
+\end{frame}
+
+%--------------------------------------------
+
+\begin{frame}[fragile]
+\frametitle{Referências bibliográficas}
+
+\bibliography{references.bib}
+
+\end{frame}
+
+%------------------------------------------------
+
+\end{document}

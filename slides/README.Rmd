@@ -1,0 +1,103 @@
+Instruções para uso e compilação
+================================
+
+# Arquivos `.Rnw` ou `.tex`
+
+Para produção de slides baseadas em LaTeX pleno, visite o arquivo
+`slides.Rnw`.  Caso não precise incluir fragmentos de código R,
+considere o arquivo `slides.tex` como arquivo fonte.
+
+Para avaliar o código R dos fragmentos, execute em um terminal shell a
+instrução a seguir.
+
+```{sh}
+# Avalia o código R, de .Rnw -> .tex.
+Rscript -e 'knitr::knit("slides.Rnw")'
+```
+
+Depois de gerado o arquivo `slides.tex` basta compilar para ter o PDF.
+Execute as instruções a seguir para compilar para PDF.  Caso não esteja
+usando referências bibliográficas, as instruções `bibtex` não serão
+necessárias.
+
+```{sh}
+# Compila .tex -> .pdf com referências.
+pdflatex slides.tex
+bibtex slides
+bibtex slides
+bibtex slides
+pdflatex slides.tex
+pdflatex slides.tex
+
+# Remove arquivos auxiliares desnecessários.
+rubber --clean slides
+```
+
+# Arquivos `.Rmd`
+
+Para edição baseada em arquivos markdown, visite o arquivo
+`presentation.Rmd`.  O output dessa compilação é PDF (passando por
+LaTeX).  Execute as instruções abaixo para compilar.
+
+```{sh}
+# Avalia o código R, de .Rmd -> .pdf.
+Rscript -e 'rmarkdown::render("presentation.Rmd")'
+```
+
+# Arquivos `.org` do Emacs
+
+Para usuários do Emacs, o Org-mode possui a sua própria linguagem de
+marcação (a `org`) que permite inserir, avaliar e gerar resultados de
+fragmentos de código de várias linguagens de programação.  Inclua o
+código a seguir no `.emacs` para habilitar as linguagens Elisp, R,
+Python e Shell.
+
+```{lisp}
+;; Adicione ao seu `.emacs`.
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '((emacs-lisp . t)
+                               (R . t)
+                               (python . t)
+                               (sh . t)))
+(setq org-confirm-babel-evaluate nil)
+```
+
+Visite o arquivo `document.org` para ver exemplos de ambientes e
+marcações.
+
+Faça `C-c '` dentro um fragmento para o conteúdo abrir em um novo buffer
+para edição e avaliação do código.  Ao terminar, faça `C-c '` para
+retornar para a edição do arquivo `.org`.  Com o cursos no fragmento,
+faça `C-c C-c` para avaliar o conteúdo e gerar um fragmento abaixo com o
+resultado.
+
+Quando estiver fazendo Beamer **COM referências bibliográficas**,
+compile no emacs de `.org` para `.tex` com `C-c C-e l b` e depois rode
+`pdflatex` e `bibtex` por fora.
+
+É possível mudar o processo que compila o documento incluindo a
+instrução para `bibtex`.  Tente usar o código abaixo no seu `.emacs`.
+
+Se estiver fazendo Beamer SEM referências bibliográficas, compile no
+emacs de `.org` direto para `.pdf` com `C-c C-e l B`.
+
+```{sh}
+# Compila .tex -> .pdf com referências.
+pdflatex document.tex
+bibtex document
+bibtex document
+bibtex document
+pdflatex document.tex
+pdflatex document.tex
+
+# Remove arquivos auxiliares desnecessários.
+rubber --clean document
+```
+
+```{r, eval = FALSE}
+# cat(dir(), sep = "\n")
+cat(unique(sub(x = dir(),
+               pattern = ".*\\.([^.]+)$",
+               replacement = "*.\\1")),
+    sep = "\n")
+```

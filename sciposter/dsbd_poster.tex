@@ -1,0 +1,182 @@
+%-----------------------------------------------------------------------
+%                                            Prof. Dr. Walmes M. Zeviani
+%                                leg.ufpr.br/~walmes · github.com/walmes
+%                                        walmes@ufpr.br · @walmeszeviani
+%                      Laboratory of Statistics and Geoinformation (LEG)
+%                Department of Statistics · Federal University of Paraná
+%                                       2019-fev-15 · Curitiba/PR/Brazil
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+% Intruções de compilação.
+
+%-----------------------------------------------------------------------
+
+% Classe do documento: http://ctan.math.utah.edu/ctan/tex-archive/macros/latex/contrib/sciposter/scipostermanual.pdf
+\documentclass[portrait, 24pt, final]{sciposter}
+
+%\usepackage{fancybullets}
+%\usepackage{other packages you may want to use}
+
+%\definecolor{BoxCol}{rgb}{0.9,0.9,0.9}
+% uncomment for grey background to \section boxes
+% for use with default option boxedsections
+
+%\definecolor{BoxCol}{rgb}{0.9,0.9,1}
+% uncomment for light blue background to \section boxes
+% for use with default option boxedsections
+
+%\definecolor{SectionCol}{rgb}{0,0,0.5}
+% uncomment for dark blue \section text
+
+%-----------------------------------------------------------------------
+% Pacotes.
+
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\usepackage{amsmath, amsfonts, amssymb, amsxtra, amsthm}
+\renewcommand{\labelitemi}{\small $\blacktriangleright$}
+
+\usepackage[mathscr]{eucal}
+\usepackage{icomma}
+\usepackage{color}
+\usepackage{indentfirst}
+\setlength{\parindent}{3cm}
+\usepackage{multicol}
+\usepackage{setspace}
+\onehalfspace
+\usepackage[hang]{caption}
+
+\usepackage{natbib}
+\bibpunct{(}{)}{;}{a}{,}{,}
+
+\usepackage{fancybox}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes, shadows, arrows}
+
+\usepackage{Sweave}
+
+\usepackage{lipsum}
+
+%-----------------------------------------------------------------------
+
+% \definecolor{BoxCol}{rgb}{0.470,0.537,0.568}
+\definecolor{BoxCol}{rgb}{0.25, 0.25, 0.25}
+% \definecolor{SectionCol}{rgb}{1,1,1}
+\definecolor{SectionCol}{rgb}{1,0.5,0.25}
+
+%-----------------------------------------------------------------------
+\begin{document}
+
+% Imagem de cabeçalho do poster.
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor = north east, inner sep = 0em]
+  % at (current page.north east)
+  at (76, 5.5)
+  {\includegraphics[width = 1.0\paperwidth]{capa_texto.png}};
+\end{tikzpicture}
+
+\conference{
+  \normalsize I Encontro de Data Science \& Big Data, 28 de Junho de 2019, Curitiba/PR
+}
+
+\vspace{10cm}
+
+\noindent
+\begin{minipage}[c][10cm][c]{0.75\textwidth}
+
+  \vspace{6ex}
+  {\Huge
+    Título do trabalho de conclusão de curso a ser apresentado
+    no I Encontro de Data Science \& Big Data
+  }
+
+  \vspace{1ex}
+  {\Large
+    Autor do Trabalho$^1$,
+    Professor Orientador$^2$,
+    Professor Coorientador$^3$,
+    Membro Externo Convidado$^4$
+  }
+
+  \vspace{1ex}
+  $^1${Aluno do programa de Especialização em Data Science \& Big Data, {\it aluno@dsbd.ufpr.br}};\\
+  $^2${Professor do Departamento de Estatística - DEST/UFPR, {\it orientador@dsbd.ufpr.br}};\\
+  $^3${Professor do Departamento de Informática - DINF/UFPR, {\it coorientador@dsbd.ufpr.br}};\\
+  $^3${Head de Data Science da Empresa XYZ, {\it colaborador@empresa.xyz}};
+
+\end{minipage}
+
+\vspace{3cm}
+
+%-----------------------------------------------------------------------
+% Conteúdo do poster.
+
+\begin{multicols}{2}
+
+\begin{abstract}
+  \lipsum[1-2]
+
+  \noindent  {\textbf{Palavras chaves:} {
+      \it Michaelis Mentem, curvatura intrínseca, regressão, latossolo}.
+  }
+\end{abstract}
+
+%-----------------------------------------------------------------------
+\section*{Introdução}
+
+\begin{itemize}
+\item Contextualização do assunto.
+\item Abordagens já aplicadas.
+\item Casos já conhecidos.
+\item Aspectos da problematização.
+\item Hipóteses.
+\item Justificativa.
+\item Objetivos.
+\end{itemize}
+
+\section*{Material e Métodos}
+
+\begin{itemize}
+\item Sobre o conjunto de dados.
+\item Metodologia estatística.
+\item Recursos computacionais.
+\item Acesso ao material.
+\end{itemize}
+
+\section*{Resultados e discussões}
+
+\begin{itemize}
+\item Principais resultados.
+\item Tabelas.
+\item Gráficos.
+\end{itemize}
+
+\section*{Conclusões}
+
+\begin{itemize}
+\item Conclusões.
+\end{itemize}
+
+\section*{Principais Referências}
+\begin{spacing}{0.8}
+\begin{itemize}
+\begin{small}
+ \item[] HOTHORN, T.; BRETZ, F.; WESTFALL, P. (2008). Simultaneous Inference in General
+         Parametric Models. \textbf{Biometrical Journal}, 50(3), 346--363.
+ \item[] R Development Core Team. (2010). R: A language and environment for statistical
+         computing. R Foundation for Statistical Computing, Vienna, Austria.
+         ISBN 3-900051-07-0, url \textit{http://www.R-project.org.}
+\end{small}
+\end{itemize}
+\end{spacing}
+
+\section*{Agradecimentos}
+
+\noindent
+Os autores agradecem á Secretatia de Segurança Pública pela disponibilização dos dados.
+
+\end{multicols}
+\end{document}

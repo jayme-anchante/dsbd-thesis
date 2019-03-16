@@ -1,0 +1,139 @@
+#   Template para slides em Beamer do Curso de Especialiação em
+#   Data Science & Big Data - UFPR
+#
+#                                                   Prof. Walmes Zeviani
+#                                                       Vice-coordenador
+
+#+TITLE:     Modelo para Slides
+#+AUTHOR:    Prof. Walmes Zeviani
+#+EMAIL:     walmes@ufpr.br
+#+DATE:
+#+LANGUAGE:  pt
+
+#+STARTUP: beamer
+#+LaTeX_CLASS: beamer
+#+BEAMER_THEME: default
+
+#+BEAMER_HEADER: \subtitle{Para arquivos \texttt{.tex} e \texttt{.Rnw}}
+#+BEAMER_HEADER: \institute[]{
+#+BEAMER_HEADER:   {\tiny Curso de Especialização em}\\
+#+BEAMER_HEADER:   {Data Science \& Big Data}\\
+#+BEAMER_HEADER:   {\tiny Universidade Federal do Paraná}}
+#+BEAMER_HEADER: \logo{
+#+BEAMER_HEADER:   \includegraphics[width=1.5cm]{../config/dsbd1x4.png}
+#+BEAMER_HEADER: }
+#+BEAMER_HEADER: \usebackgroundtemplate{
+#+BEAMER_HEADER:   \includegraphics[height=\paperheight]{../config/ufpr-fundo-4x3.jpg}
+#+BEAMER_HEADER: }
+
+# PREAMBULO ------------------------------------------------------------
+
+#+LaTeX_HEADER: \usepackage[brazil]{babel}
+#+LaTeX_HEADER: \usepackage[utf8]{inputenc}
+#+LaTeX_HEADER:
+#+LaTeX_HEADER: \usepackage{tikz}
+#+LaTeX_HEADER: \usepackage{graphicx}
+#+LaTeX_HEADER: \usepackage{upquote}
+#+LaTeX_HEADER: \usepackage{listings}
+#+LaTeX_HEADER: \usepackage{hyperref}
+#+LaTeX_HEADER: \usepackage{color}
+#+LaTeX_HEADER:
+#+LaTeX_HEADER: % Legenda de elementos flutuantes.
+#+LaTeX_HEADER: \usepackage[hang]{caption}
+#+LaTeX_HEADER: \captionsetup{
+#+LaTeX_HEADER:   font=footnotesize,
+#+LaTeX_HEADER:   labelfont=footnotesize,
+#+LaTeX_HEADER:   labelsep=period}
+#+LaTeX_HEADER:
+#+LaTeX_HEADER: % Fontes.
+#+LaTeX_HEADER: \usepackage[default]{lato}
+#+LaTeX_HEADER: \usepackage{inconsolata}
+#+LaTeX_HEADER:
+#+LaTeX_HEADER: \input{header.tex}
+
+#+LaTeX_HEADER: % Referências bibliográficas.
+#+LaTeX_HEADER: \usepackage[
+#+LaTeX_HEADER:   alf,
+#+LaTeX_HEADER:   abnt-emphasize=bf,
+#+LaTeX_HEADER:   abnt-etal-list=2,
+#+LaTeX_HEADER:   abnt-and-type=&]{abntex2cite}
+#+LaTeX_HEADER: % Usar \cite{<ref>} e \citeonline{<ref>}.
+
+#+LaTeX_HEADER: % Referências bibliográficas.
+# #+LaTeX_HEADER: \usepackage[backend=bibtex]{biblatex}
+# #+LaTeX_HEADER: \bibliography{references.bib}
+
+#+OPTIONS: H:1 toc:nil
+
+# ----------------------------------------------------------------------
+
+* Lista de disciplinas da especialização
+
+  - Fundamentos para DSBD
+    + Infraestrutura computational
+    + Inferência estatística para ciência de dados
+    + Linguagens de programação para ciência de dados
+  - Métodos contemporâneos em DSBD
+    + Processamento de Big Data
+    + Modelos estatísticos
+    + Mineração de dados e aprendizagem de máquina
+    + Métodos de pesquisa
+
+* Importante
+
+  Quando estiver fazendo Beamer COM referências bibliográficas, compile
+  no emacs de =.org= para =.tex= com =C-c C-e l b= e depois rode
+  =pdflatex= e =bibtex= por fora.
+
+  É possível mudar o processo que compila o documento incluindo a
+  instrução para =bibtex=.  Tente usar o código abaixo no seu =.emacs=.
+
+#+begin_src emacs-lisp
+(setq org-latex-to-pdf-process
+  '("pdflatex %f" "bibtex %b" "pdflatex %f" "pdflatex %f"))
+#+end_src
+
+  Veja esse link [[https://lists.gnu.org/archive/html/emacs-orgmode/2011-02/msg01350.html]].
+
+  Se estiver fazendo Beamer SEM referências bibliográficas, compile no
+  emacs de =.org= direto para =.pdf= com =C-c C-e l B=.
+
+* Fragmentos de código Python
+
+** Olá mundo! Sou o Python
+
+#+BEGIN_SRC python :results output
+  print("Hello, world!")
+#+END_SRC python
+
+#+RESULTS:
+: Hello, world!
+
+#+begin_src R :eval yes :exports results
+  summary(cars)
+#+end_src
+
+#+RESULTS: zuca
+| Min.   : 4.0 | Min.   :  2.00 |
+| 1st Qu.:12.0 | 1st Qu.: 26.00 |
+| Median :15.0 | Median : 36.00 |
+| Mean   :15.4 | Mean   : 42.98 |
+| 3rd Qu.:19.0 | 3rd Qu.: 56.00 |
+| Max.   :25.0 | Max.   :120.00 |
+
+Veja esses links:
+[[https://orgmode.org/guide/Working-With-Source-Code.html]],
+[[https://gist.github.com/Superbil/5899556]],
+
+* Fazendo citações
+
+  - Citação em explícita: ``Conforme \citeonline{banzatto}, a unidade
+    experimental ...''
+  - Citação em implicita: ``... a importância da blocagem no experimento
+    \cite{banzatto}.''
+
+* Referências bibliográficas
+  :PROPERTIES:
+  :BEAMER_OPT: fragile,allowframebreaks,label=
+  :END:
+  \bibliography{references.bib}

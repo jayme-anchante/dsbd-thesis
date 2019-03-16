@@ -1,0 +1,34 @@
+\usepackage[default]{lato}
+\usepackage{inconsolata}
+
+\input{header.tex}
+
+% Tamanho de fonte e distância entre linhas (R input).
+\renewenvironment{Shaded}{
+  \renewcommand{\baselinestretch}{0.75}%\tiny
+}{}
+
+% R output e todo verbatim.
+\makeatletter
+\def\verbatim@font{\linespread{0.75}\normalfont\ttfamily}
+\makeatother
+
+\logo{
+  \includegraphics[width=1.5cm]{../config/dsbd1x4.png}
+}
+
+\usepackage{tikz}
+\usebackgroundtemplate{
+  \tikz[overlay, remember picture]
+  \node[%opacity=0.3,
+        at = (current page.south east),
+        anchor = south east,
+        inner sep = 0pt] {
+          \includegraphics[height = \paperheight, width = \paperwidth]{../config/ufpr-fundo-4x3.jpg}
+        };
+}
+
+\institute[]{
+  {\tiny Curso de Especialização em}\\
+  {Data Science \& Big Data}\\
+  {\tiny Universidade Federal do Paraná}}

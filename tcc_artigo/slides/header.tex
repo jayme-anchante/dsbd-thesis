@@ -1,0 +1,111 @@
+% define a bunch of colors ---------------------------------------------
+
+\definecolor{gray}{RGB}{110, 110, 110}
+\definecolor{darkgray}{RGB}{100, 100, 100}
+\definecolor{lightgray}{RGB}{200, 200, 200}
+\definecolor{lightgrey}{RGB}{200, 200, 200}
+% \definecolor{turquoise}{RGB}{81, 193, 188}
+% \definecolor{mamey}{RGB}{255, 107, 107}
+% \definecolor{tomato}{RGB}{255, 136, 136}
+% \definecolor{lemon}{rgb}{0.81, 0.95, 0.29}
+% \definecolor{bluesky}{rgb}{0.71, 0.81, 0.96}
+% \definecolor{chiclamino}{RGB}{107, 174, 214}
+% \definecolor{violet}{RGB}{133, 135, 211}
+\definecolor{mandarina}{RGB}{229, 169, 25} % Tom de amarelo.
+
+\definecolor{foreground}{RGB}{81, 141, 193}
+% \definecolor{background}{RGB}{246, 244, 240}
+\definecolor{highlight}{RGB}{229, 169, 25}
+\definecolor{lowlight}{RGB}{200, 200, 200}
+
+% DSBD logo colors. -------------------------
+\definecolor{azul}{HTML}{013376}
+\definecolor{roxo}{HTML}{7D0061}
+\definecolor{turq}{HTML}{00A28D}
+
+% setting beamer colors
+\setbeamercolor{title}{fg=azul}    % Título dos slides.
+\setbeamercolor{subtitle}{fg=roxo} % Subtítulo.
+
+\setbeamercolor{frametitle}{fg=azul}  % De quadro.
+\setbeamercolor{block title}{fg=turq} % De bloco.
+\setbeamercolor{structure}{fg=turq}   % Listas.
+\setbeamercolor{institute}{fg=gray}   % Instituição.
+
+\setbeamercolor{titlelike}{fg=title}
+% \setbeamercolor{normal text}{fg=gray, bg=background}
+\setbeamercolor{normal text}{fg=gray}
+
+% \setbeamercolor{palette primary}{fg=lightgray}
+% \setbeamercolor{palette secondary}{fg=lightgray}
+% \setbeamercolor{palette tertiary}{fg=lightgray}
+
+%-----------------------------------------------------------------------
+
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+\setbeamerfont{itemize/enumerate subitem}{size=\footnotesize}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=roxo,
+  linkcolor=turq,
+  citecolor=roxo
+}
+
+% commands -------------------------------------------------------------
+
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\high}[1]{\textcolor{highlight}{#1}}
+\newcommand{\low}[1]{\textcolor{lowlight}{#1}}
+\newcommand{\highcode}[1]{\textcolor{highlight}{\texttt{#1}}}
+
+%-----------------------------------------------------------------------
+
+%\usecolortheme{rose}
+\setbeamertemplate{blocks}[rounded]
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{frametitle}[default][center]
+\setbeamertemplate{frametitle continuation}{\gdef\beamer@frametitle{}}
+\useoutertheme{infolines}  % add footlines
+\setbeamersize{text margin left=25pt, text margin right=25pt}
+
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+\setbeamertemplate{sections/subsections in toc}[ball]{}
+% \setbeamertemplate{section in sidebar right}[sections numbered]
+
+%-----------------------------------------------------------------------
+
+% to remove empty brackets of \institution
+\makeatletter
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[
+      wd=.333333\paperwidth,
+      ht=2.25ex,
+      dp=1ex,
+      left]{author in head/foot}%
+      \usebeamerfont{author in head/foot}\hspace*{2em}\textcolor{turq}{\insertshortauthor}%~~\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[
+      wd=.333333\paperwidth,
+      ht=2.25ex,
+      dp=1ex,
+      center]{title in head/foot}%
+      \usebeamerfont{title in head/foot}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[
+      wd=.333333\paperwidth,
+      ht=2.25ex,
+      dp=1ex,
+      right]{date in head/foot}%
+      % \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+      \insertframenumber{}/\inserttotalframenumber\hspace*{2em}
+    \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\makeatother
