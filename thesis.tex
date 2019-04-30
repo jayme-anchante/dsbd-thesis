@@ -97,22 +97,54 @@
 \end{primeirapagina}
 \saythanks
 
-\section{Introdução}
+\section{Introdução} \label{introduction}
 
-Lorem ipsum.
-sit amet.
+Série temporal são dados pontuais ordenados temporalmente. Apesar do tempo ser contínuo, normalmente uma série temporal envolve dados discretos, tomados em sequência de períodos igualmente espaçados e sucessivos de tempo. Além da análise de séries temporais, ou seja, métodos para extrair estatísticas úteis e outras características dos dados, outro tema bastante relevante e objeto de estudos do presente trabalho é a predição de séries temporais, processo que envolve o uso de modelos que predigam valores futuros com base em valores passados observados.
 
-\section{Tratamento clássico} \label{section1}
+A previsão de séries temporais é um tema bastante relevante e comum na vida de todos. Indivíduos verificam a previsão do tempo do dia seguinte para saber como se agasalhar ou se devem levar um guarda chuva, lemos no jornal a previsão da inflação para os próximos meses ou a cotação do dólar futuro, planejamos quanto iremos gastar por mês ao longo do ano ou até dos anos seguintes. Governos precisam prever os gastos do ano seguinte para ajustar o provimento do orçamento, prever o crescimento dos demais países para avaliar um acordo de comércio e o Banco Central deve prever a inflação dos próximos meses para fazer um ajuste na taxa de juros básica da economia. Empresas devem prever o demanda por seus produtos no varejo para que as lojas não fiquem desabastecidas, prever a sua receita nos próximos anos para avaliar um potencial investimento e exportadoras prevêem o dólar para que não incorram em prejuízos cambiais.
 
-Ajuste e predição em toda a base.
+Séries temporais diferenciam-se de estudos de seção cruzada, pois estes não possuem nenhuma ordenação no tempo, como por exemplo o efeito da educação no salário dos indivíduos, em que os dados de diferentes pessoas podem colocados em qualquer ordem sem que haja prejuízo para a modelagem, ou ainda os dados são reflexo de um certo período de tempo, como por exemplo um censo decenal ou uma pesquis anual. Diferenciam-se ainda de dados espaciais, pois estes possuem uma dependência geográfica, por exemplo o preço de imóveis depende da localização assim como de variáveis intrínsecas dos imóveis.
+
+A análise de séries temporais pode ser dividia entre dois domínios: de frequência e de tempo. O último envolve o uso de funções matemáticas  ou sinais com respeito a frequência, ou seja, o quanto do sinal fica entre cada banda de frequência ao longo de uma série de frequências, algumas das transformações matemáticas mais utilizadas são as transformações de Fourier, de Laplace, Z e de Ondas, com aplicações em ondas sonoras, circuitos eletrônicos, processamento de sinal digital e compressão de dados. O domínio do tempo envolve o uso de funções matemáticas ou sinais com respeito ao tempo, que serão tratadas ao longo do presente trabalho.
+
+Ainda, as técnicas de séries temporais podem ser divididas entre paramétricas e não paramétricas. As paramétricas assumem que os dados possuem um estrutura que pode ser descrita por um certo número finito (e normalmente pequeno) de parâmetros, que serão estimados para descrever o processo gerador dos dados, abordagem proposta pelo presente estudo. As técnicas não paramétricas tentam estimar diretamente os diferentes momentos dos dados (como média, variância e covariância) sem que seja assumido que o processo gerador possua qualquer estrutura em particular.
+
+Por fim, a análise pode ser feita de forma univariada ou multivariada. O caso univariado trata de apenas uma série temporal, única e exclusivamente, enquanto que no caso multivariado, uma ou mais variáveis que podem ter uma relação de dependência são analisadas simultaneamente. Trataremos apenas do caso univariado.
+
+
+O presente trabalho está organizado como se segue: analisaremos a forma como a estatística tradicional e como a de ciência de dados modelam séries temporais nas seções 1 e 2, respectivamente, além de uma introdução de cada abordagem, cada seção também disporá de duas subseções que tratarão dos principais modelos utilizados assim como as medidas de sucesso de cada abordagem. A seção 3 mostrará um benchmark das duas abordagens predizendo bases de dados amplamente utilizadas trabalhos acadêmicos ou medidas bastante populares.
+
+\section{Abordagem estatística clássica de séries temporais} \label{section1}
+
+A base de séries temporais para a estatística é o modelo de Média Móvel Integrada Autorregressiva (ou em inglês, Autorregressive Integrated Moving Average - ARIMA) cujos valores (que podem ter uma ou mais diferenciações) dependem dos valores passados e dos erros de períodos passados.
+
+\subsection{Passeio aleatório, modelo ARIMA e derivados} \label{subsection11}
+
+Considere um processo do tipo
+
+$$ y_{t} = \epsilon $$
+
+Conhecido como passeio aleatório
+
+O processo
+
+$$ y_{t} = \alpha y_{t-1} + \epsilon $$
+
+\subsection{Critérios de avaliação dos modelos} \label{subsection12}
+
+Normalmente, o ajuste do modelo é feito levando em consideração toda a base de dados disponível ou ainda, pode ser que uma amostra com os dados mais recentes.
 Uso de critérios de informação, como AIC, BIC, para quantificar a qualidade do ajuste
 
-\section{Tratamento machine learning} \label{section2}
+\section{Abordagem da ciência de dados} \label{section2}
 
 Lorem ipsum
 sit amet
 
-\subsection{Formas de validação cruzada} \label{sub1}
+\subsection{Modelos}  \label{subsection21}
+
+Lorem ipsum
+
+\subsection{Critérios de avaliação dos modelos} \label{subsection22}
 
 Lorem ipsum
 sit amet
