@@ -48,8 +48,8 @@
 
 \author[1]{Jayme T. Anchante}
 
-\affil[1]{Departamento de Física, Universidade Regional do Cariri
-  Av. Leão Sampaio 107, Triângulo, 63041-082, Juazeiro do Norte, CE,
+\affil[1]{Departamento de Estatística, Universidade Federal do Paraná
+  R. Evaristo F. Ferreira da Costa, 393 - Centro Politécnico, Jardim das Américas, 81531-990, Curitiba, PR, Brasil
   Brasil\thanks{\href{emailto:jayme.anchante@disroot.org}{jayme.anchante@disroot.org}}
 }
 
@@ -97,13 +97,14 @@
 \end{primeirapagina}
 \saythanks
 
-\section{Introdução} \label{introduction}
+\section{Introdução} \label{intro}
+
 
 Série temporal são dados pontuais ordenados temporalmente. Apesar do tempo ser contínuo, normalmente uma série temporal envolve dados discretos, tomados em sequência de períodos igualmente espaçados e sucessivos de tempo. Além da análise de séries temporais, ou seja, métodos para extrair estatísticas úteis e outras características dos dados, outro tema bastante relevante e objeto de estudos do presente trabalho é a predição de séries temporais, processo que envolve o uso de modelos que predigam valores futuros com base em valores passados observados.
 
 A previsão de séries temporais é um tema bastante relevante e comum na vida de todos. Indivíduos verificam a previsão do tempo do dia seguinte para saber como se agasalhar ou se devem levar um guarda chuva, lemos no jornal a previsão da inflação para os próximos meses ou a cotação do dólar futuro, planejamos quanto iremos gastar por mês ao longo do ano ou até dos anos seguintes. Governos precisam prever os gastos do ano seguinte para ajustar o provimento do orçamento, prever o crescimento dos demais países para avaliar um acordo de comércio e o Banco Central deve prever a inflação dos próximos meses para fazer um ajuste na taxa de juros básica da economia. Empresas devem prever o demanda por seus produtos no varejo para que as lojas não fiquem desabastecidas, prever a sua receita nos próximos anos para avaliar um potencial investimento e exportadoras prevêem o dólar para que não incorram em prejuízos cambiais.
 
-Séries temporais diferenciam-se de estudos de seção cruzada, pois estes não possuem nenhuma ordenação no tempo, como por exemplo o efeito da educação no salário dos indivíduos, em que os dados de diferentes pessoas podem colocados em qualquer ordem sem que haja prejuízo para a modelagem, ou ainda os dados são reflexo de um certo período de tempo, como por exemplo um censo decenal ou uma pesquis anual. Diferenciam-se ainda de dados espaciais, pois estes possuem uma dependência geográfica, por exemplo o preço de imóveis depende da localização assim como de variáveis intrínsecas dos imóveis.
+Séries temporais diferenciam-se de estudos de seção cruzada, pois estes não possuem nenhuma ordenação no tempo, como por exemplo o efeito da educação no salário dos indivíduos, em que os dados de diferentes pessoas podem colocados em qualquer ordem sem que haja prejuízo para a modelagem, ou ainda os dados são reflexo de um certo período de tempo, como por exemplo um censo decenal ou uma pesquisa anual. Diferenciam-se ainda de dados espaciais, pois estes possuem uma dependência geográfica, por exemplo o preço de imóveis depende da localização assim como de variáveis intrínsecas dos imóveis.
 
 A análise de séries temporais pode ser dividia entre dois domínios: de frequência e de tempo. O último envolve o uso de funções matemáticas  ou sinais com respeito a frequência, ou seja, o quanto do sinal fica entre cada banda de frequência ao longo de uma série de frequências, algumas das transformações matemáticas mais utilizadas são as transformações de Fourier, de Laplace, Z e de Ondas, com aplicações em ondas sonoras, circuitos eletrônicos, processamento de sinal digital e compressão de dados. O domínio do tempo envolve o uso de funções matemáticas ou sinais com respeito ao tempo, que serão tratadas ao longo do presente trabalho.
 
@@ -112,39 +113,179 @@ Ainda, as técnicas de séries temporais podem ser divididas entre paramétricas
 Por fim, a análise pode ser feita de forma univariada ou multivariada. O caso univariado trata de apenas uma série temporal, única e exclusivamente, enquanto que no caso multivariado, uma ou mais variáveis que podem ter uma relação de dependência são analisadas simultaneamente. Trataremos apenas do caso univariado.
 
 
-O presente trabalho está organizado como se segue: analisaremos a forma como a estatística tradicional e como a de ciência de dados modelam séries temporais nas seções 1 e 2, respectivamente, além de uma introdução de cada abordagem, cada seção também disporá de duas subseções que tratarão dos principais modelos utilizados assim como as medidas de sucesso de cada abordagem. A seção 3 mostrará um benchmark das duas abordagens predizendo bases de dados amplamente utilizadas trabalhos acadêmicos ou medidas bastante populares.
+O presente trabalho está organizado como se segue: analisaremos a forma como a estatística inferencial e como a estatística preditiva modelam séries temporais nas seções 1 e 2, respectivamente, além de uma introdução de cada abordagem, cada seção também disporá de duas subseções que tratarão dos principais modelos utilizados assim como as medidas de sucesso de cada abordagem. A seção 3 mostrará um benchmark das duas abordagens predizendo bases de dados amplamente utilizadas trabalhos acadêmicos ou medidas bastante populares.
 
-\section{Abordagem estatística clássica de séries temporais} \label{section1}
+\section{Abordagem da estatística inferencial} \label{inferential}
 
-A base de séries temporais para a estatística é o modelo de Média Móvel Integrada Autorregressiva (ou em inglês, Autorregressive Integrated Moving Average - ARIMA) cujos valores (que podem ter uma ou mais diferenciações) dependem dos valores passados e dos erros de períodos passados.
+O presente trabalho descreverá na presente seção a abordagem da estatística inferencial. Chamamos assim o conjunto de escolas, pensamentos, autores e paradigmas que tratam séries temporais utilizando modelos lineares, com validação do ajuste dentro da amostra, com foco principalmente, mas não exclusivamente, em testes de hipóteses, derivação de estimativas, dedução das propriedades da distribuição de probabilidades da série e generalização das conclusões para a população. Nesta seção apresentaremos as principais ideias deste \textit{corpus} representado especialmente mas não exclusivamente por autores como Brockwell e Davis\cite{Brockwell}, Enders\cite{Enders}, Greene\cite{Greene}, Gujarati e Porter\cite{Gujarati}, Hayashi\cite{Hayashi}, Hamilton\cite{Hamilton}, Hyndman e Athanasopoulos\cite{Hyndman}. Seguiremos as discussões conforme o livro texto de Gujarati e Porter \cite{Gujarati}
 
-\subsection{Passeio aleatório, modelo ARIMA e derivados} \label{subsection11}
+Um dos grandes fundamentos da abordagem estatística é a natureza não determinística de séries temporais, ou seja, não podemos prever com total certeza valores futuros. Geralmente assume-se que uma série temporal ${x(t),t=0,1,2,...}$ segue um certo modelo de probabilidade que descreve a distribuição conjunta de uma variável aleatória $x_{t}$. A expressão matemática que descreve a estrutura de probabilidade de uma série temporal é chamada de processo estocástico. A sequência de observações da série na verdade é a realização de uma amostra do processo estocástico que a produziu.
 
-Considere um processo do tipo
+\subsection{Estacionariedade, ruído branco e passeio aleatório} \label{stationary}
 
-$$ y_{t} = \epsilon $$
+Uma característica importante de uma série temporal é a estacionariedade, diz-se que um processo estocástico é estacionário se a média e a variância são constantes ao longo do tempo e o valor da covariância entre dois períodos depende exclusivamente da distância entre os dois períodos e não do período em que a covariância é computada. Esta definição é chamada de fracamente estacionária ou estacionária de covariância, o que já é suficiente para as definições que iremos tratar no presente trabalho. Matematicamente, estacionariedade pode ser definida como:
 
-Conhecido como passeio aleatório
+\begin{equation}
+E(Y_{t}) = u 
+\gamma_{k} = E[(Y_{t} - u) (Y_{t+k - u})]
+\end{equation}
 
-O processo
+\begin{equation}
+var(Y_t) = E(Y_{t} - u)^2 = \sigma^{2} 
+\end{equation}
 
-$$ y_{t} = \alpha y_{t-1} + \epsilon $$
+\begin{equation}
+\gamma_{k} = E[(Y_{t} - u) (Y_{t+k - u})] \text{ ,}
+\end{equation}
 
-\subsection{Critérios de avaliação dos modelos} \label{subsection12}
+em que $\gamma_{k}$, a covariância no \textit{lag} $k$, é a covariância entre os valores $Y_{t}$ e $Y_{t+k}$.
 
-Normalmente, o ajuste do modelo é feito levando em consideração toda a base de dados disponível ou ainda, pode ser que uma amostra com os dados mais recentes.
-Uso de critérios de informação, como AIC, BIC, para quantificar a qualidade do ajuste
+Se uma série temporal não atende os requisitos acima dizemos que ela é não estacionária. Séries temporais que exibem uma tendência ou sazonalidade são exemplos de séries não estacionárias (trataremos destes casos ao longo do texto). A estacionariedade é importante para questões de generalização: se a série é estacionária podemos extrapolar previsões para outros períodos além da série em questão com maior grau de precisão.
 
-\section{Abordagem da ciência de dados} \label{section2}
+Um tipo especial de processo estocástico é o ruído branco ou puramente aleatório. Um processo é puramente aleatório se possuir média zero, variância constante e for serialmente não correlacionado. Ainda, se os valores forem independentes e identicamente distribuídos de uma distribuição normal, este processo é chamado de ruído branco Gaussiano.
 
-Lorem ipsum
-sit amet
+Um exemplo de série temporal não estacionária é o passeio aleatório. Alguns dos exemplos práticos que seguem esse processo são o preço das ações, taxas de câmbio. Supondo um ruído branco $u_{t}$ com média zero e variância $\sigma^{2}$. Então $Y_{t}$ é um passeio aleatório se
 
-\subsection{Modelos}  \label{subsection21}
+\begin{equation}
+Y_{t} = \delta + Y_{t-1} + u_{t}
+\end{equation}
 
-Lorem ipsum
+Assim, no modelo do passeio aleatório, o valor da série em um período qualquer $Y_{t}$ depende de um parâmetro delta $\delta$, conhecido como \textit{drift} - pois o parâmetro impulsiona a série para cima ou para baixo dependendo de seu sinal, do valor no período inicial $Y_{0}$ mais o valor dos choques aleatórios acumulados até o período $\sum u_{t}$, conhecido como tendência estocástica.
 
-\subsection{Critérios de avaliação dos modelos} \label{subsection22}
+Podemos reescrever o modelo do passeio aleatório como sendo
+
+\begin{equation} \label{unit_root_eq}
+    Y_{t} = \rho Y_{t-1} + u_{t} \qquad -1 \leq \rho \leq 1
+\end{equation}
+
+Se $\rho = 1$, temos um modelo do passeio aleatório sem drift, também conhecido como problema de raiz unitária. Sabemos que o passeio aleatório é não estacionário, assim os termos passeio aleatório, não estacionariedade, raiz unitária e tendência estocástica podem ser tratados de forma sinônima. Se $|\rho| \leq 1$, então a série $Y_{t}$ é estacionária.
+
+O conceito de passeio aleatório é um caso específico de uma classe mais abrangente de processos estocásticos chamada de processos integrados. O passeio aleatório é não estacionário, mas se tomarmos sua primeira diferença o processo se torna estacionário, assim ele é um processo integrado de ordem 1 ou $I(1)$. Ainda, uma série temporal que necessite ser diferenciada duas vezes é chamda de integrada de ordem 2. Em geral, se uma série necessita ser diferenciada \textit{d} vezes para ser estacionária, dizemos é integrada de ordem \textit{d}, denotada por $Y_{t} \sim I(d)$.
+
+
+\subsection{Regressão espúria} \label{spurious}
+
+Considerando duas variáveis aleatórias que seguem um processo do tipo passeio aleatório $Y_{t}$ e $X_{t}$ dependentes de ruídos brancos independentes e serialmente não correlacionados $u_{t}$ e $v_{t}$, respectivamente. Uma regressão entre estas variáveis produzirá coeficientes betas estatisticamente significativos, pois a testes usuais de significância são inválidos nestes casos\cite{Granger-Newbold}. Ainda, o coeficiente de determinação se mostra extremamente baixo, além de que a estatística $d$ de Durbin-Watson sugerir uma alta autocorrelação de primeira ordem\cite{Greene}. Este é o fenômeno da regressão espúria \cite{Yule}.
+
+Regressões deste tipo não possuem nenhum significado, o que pode ser atestado quando realizamos a mesma regressão, entretanto com ambas as variáveis em suas primeiras diferenças, deixando-as estacionárias. O coeficiente de determinação ficará perto de zero, e a estatística de Durbin-Watson estará próxima de 2.
+
+\subsection{Testes de raiz unitária} \label{unit_root}
+
+Supondo um processo do tipo estocástico de raiz unitária como da equação \ref{unit_root_eq}, se $\rho = 1$, temos o modelo do passeio aleatório sem drift, portanto um processo não estacionário. Entretanto, não podemos estimar diretamente o parâmetro $\rho$ para verificar se o coeficiente é igual a 1, pois o teste $t$ de Student fica viesado no caso de raiz unitária. Mas podemos subtrair $Y_{t-1}$ de ambos os lados da equação, assim
+
+\begin{equation} \label{Dickey_Fuller_eq}
+    \Delta Y_{t} = \delta Y_{t-1} + u_{t}
+\end{equation}
+
+em que $\delta = (1-\rho)$ e $\Delta$ é o operador da primeira diferença. Sob a hipótese nula de que $\delta = 0$ (contra a hipótese alternativa de que $\delta < 0$), a estatística \textit{t} segue a distribuição $\tau$\cite{Dicker-Fuller}, assim este teste de raiz unitária é conhecido como teste de Dickey-Fuller. A equação \ref{Dickey_Fuller_eq} pode ainda ser reespecificada incluindo um \textit{drift} na forma de um $\beta_{1}$ ou ainda incluindo o \textit{drift} e uma tendência determinística $\beta_{2}t$. Uma segunda versão chamada de teste de Dickey-Fuller aumentado inclui defasagens da variável dependente $\Delta Y_{t-i}$ para tentar capturar autocorrelações de maior grau.
+
+Existem outros testes para detectar a presença de uma raiz unitária em uma série temporal. O teste desenvolvido por Elliot, Rothenberg e Stock\cite{Elliot-Rothenberg-Stock} conhecido como ADF-GLS é assintoticamente mais indicado que o teste usual de Dickey-Fuller caso a especificação tenha \textit{drift} e/ou tendência determinística. O teste de Phillips-Perron\cite{Phillips-Perron} leva em consideração uma possível autocorrelação no termo de erro ao se introduzir defasagens da variável dependente. O teste KPSS de Kwiatkowski–Phillips–Schmidt–Shin\cite{Kwiatkowski} testa a hipótese nula de que a série é estacionária ao redor de uma tendência determinística contra a hipótese alternativa de raiz unitária.
+
+\subsection{Modelos de séries temporais} \label{arima}
+
+Os tipos de modelos de séries temporais podem ser classificados em aproximadamente cinco tipos\cite{Gujarati}: i) métodos de suavização, que consistem em ajustar uma curva suave em dados históricos\cite{Hyndman}, tais como os métodos de suavização exponencial\cite{Brown}, Holt linear\cite{Holt}, Holt-Winters\cite{Winters}, entre outros; ii) modelos de regressão de uma única equação, como o caso de prever a demanda de um determinado produto com base nos preços do produto, preços de produtos concorrentes e complementares, renda dos consumidores e outros fatores; iii) modelos de regressão de equações múltiplas, várias equações são especificadas para tentar capturar a influência dos diversos fatores em uma previsão, assim como a influência de uma previsão em outros fatores; iv) modelos baseados na metodologia de Box e Jenkins\cite{Box-Jenkins}, tecnicamente conhecidos como modelos \textit{ARIMA}, que trataremos mais na presente seção, analisam as propriedades estocásticas utilizando valores passados da uma série para tentar explicar valores presentes/futuros; v) modelos de vetores autorregressivos, sistema de multiequações em que valores das variáveis endógenas são explicados por valores passadas das mesmas variáveis e passados das outras variáveis endógenas.
+
+Desenvolveremos os principais conceitos do modelo \textit{ARIMA} por ser um dos modelos mais utilizados dentro da chamada abordagem inferencial dentro de um contexto preditivo. Seja $Y_{t}$ uma série temporal, podemos modelá-la como
+
+\begin{equation}
+    (Y_{t} - \delta) = \alpha_{1} (Y_{t-1} - \delta) + u_{t}
+\end{equation}
+
+em que $\delta$ é a média de $Y$ e $u_{t}$ é um ruído branco, podemos dizer que $Y_{t}$ segue um processo autorregressivo de primeira ordem ou \textit{AR(1)}, por ser incluída uma defasagem de $Y$ como variável explicativa. Caso $Y$ dependa de \textit{p} defasagens dizemos que segue um processo autorregresivo de ordem \textit{p} ou \textit{AR(p)}, assim no caso mais geral temos
+
+\begin{equation}
+    (Y_{t} - \delta) = \alpha_{1} (Y_{t-1} - \delta) + \alpha_{2} (Y_{t-2} - \delta)+ ... + \alpha_{p} (Y_{t-p} - \delta) + u_{t}
+\end{equation}
+
+Um outro possível processo gerador de $Y_{t}$ pode ser a seguinte distribuição
+
+\begin{equation}
+    Y_{t} = \mu + \beta_{0} u_{t} + \beta_{1} u_{t-1}
+\end{equation}
+
+em que $\mu$ é uma constante e $u$ é o termo de erro que segue um processo do tipo ruído branco. Aqui o termo $Y_{t}$ depende de uma constante mais a média móvel dos termos presentes e passados, assim neste caso temos um modelo de média móvel de primeira ordem ou \textit{MA(1)}. De forma mais geral temos
+
+\begin{equation}
+    Y_{t} = \mu + \beta_{0} u_{t} + \beta_{1} u_{t-1} + \beta_{2} u_{t-2} + ... + \beta_{q} u_{t-q}
+\end{equation}
+
+Temos que $Y_{t}$ segue um processo de média móvel de ordem \textit{q} ou \textit{MA(q)}. Em resumo, a media móvel é uma combinação linear dos termos de erro do tipo ruído branco.
+
+Uma variável aleatória $Y$ pode seguir um processo que contenha processos autorregressivos de ordem \textit{p} e de médias móveis de ordem \textit{q}, neste caso temos um processo do tipo \textit{ARMA(p, q)}. Caso a variável em questão seja não estacionária, deve-se tomar a diferença dela até que ela atinja a estacionariedade, assim o processo pode ainda ter um componente integrado de ordem \textit{d} ou \textit{I(d)}, neste caso temos o modelo \textit{ARIMA(p, d, q)}, dentro da metodologia de Box-Jenkins\cite{Box-Jenkins} a série deve ser necessariamente estacionária para que se possam fazer previsões além do período da amostra. Assim, dados que $Y_{t}$ é uma série que precisou de \textit{d} diferenças para se tornar estacionária, podemos representar o modelo ARIMA como
+
+\begin{equation}
+    Y_{t} = \theta + \sum_{1}^{p} \alpha_{p} Y_{t-p} + \beta_{0} u_{t} + \sum_{1}^{q} \beta_{q} u_{q}
+\end{equation}
+
+em que o processo possui zero ou mais componentes autorregressivos, um termo de erro presente do tipo ruído branco e zero ou mais components de médias móveis, sendo $\theta$ o termo constante. A metodologia de Box-Jenkins\cite{Box-Jenkins} consiste em quatro etapas: i) identificação dos parâmetros \textit{p}, \textit{d} e \textit{q}; ii) estimação dos parâmetros; iii) checagem e validação dos resultados; iv) caso o modelo seja validado, podemos prosseguir para a previsão de valores futuros. A seguir discutiremos um pouco de cada uma destas etapas.
+
+A primeira parte na identificação dos parâmetros é garantir que a série seja estacionária, para isso podem ser realizados um ou mais dos testes discutidos na seção \ref{unit_root}. Assim que a série for estacionária, podemos proceder a identificação dos parâmetros \textit{p} e \textit{q} utilizando correlogramas. O correlograma de função de autocorrelação (ACF) mede a correlação entre uma variável aleatória e uma de suas defasagens no período $k$. O correlograma de função parcial de autocorrelação (PACF) mede a correlação entre uma variável aleatória e uma de suas defasagens no período $k$, mas controlando por todas as defasagens entre o momento presente $t$ e a defasagem $k$. De maneira geral, um processo \textit{AR(p)} decai exponencialmente no ACF e possui picos até a defasagem \textit{p}, um processo \textit{MA(q)} decai exponencialmente no PACF e possui picos até a defasagem \textit{q} e um processo \textit{ARMA(p, q)} decai exponencialmente em ambos os correlogramas.Note que o processo de identificação muitas vezes é mais uma arte que um processo completamente objetivo\cite{Enders}.
+
+A estimação do modelo \textit{ARIMA(p, d, q)} pode ser feita via método de Mínimo Quadrados Ordinários. Para diagnóstico do modelo, podemos utilizar os resíduos da regressão e realizar os testes de raiz unitária mencionados na seção \ref{unit_root} e ainda realizar os testes de autocorrelação serial de Box-Pierce\cite{Box-Pierce} ou de Ljung-Box\cite{Ljung-Box}. Ainda, poderiam ser utilizados os critérios de informação para seleção de modelos com diferentes configurações de parâmetros, assim quanto menor o valor do critérios de informação mais parcimoniosos são os modelos e melhor a qualidade do ajuste. Por exemplo, o critério de informação de Akaike\cite{Akaike} conhecido como AIC\ref{AIC} em que o valor depende diretamento do número de parâmetros incluídos no modelo e inversamente proporcional ao valor da máxima verossimilhança. O critério de informação de Schwarz\cite{Schwarz} é conhecido como BIC\ref{BIC} por ter sido feito um argumento Bayesiano no artigo seminal de Schwarz, ele depende diretamento do número de amostras e do número de parâmetros e inversamente da máxima verossimilhança. O critério de Hannan-Quinn\cite{Hannan} conhecido como HQ\ref{HQ} depende do número de parâmetros e do número do valor de amostras duplo \textit{log}, garantindo consistência do critério, e inversamente proporcional a máxima verossimilhança.
+
+\begin{equation} \label{AIC}
+    AIC = 2k + 2 \ln (\hat{L})
+\end{equation}
+
+\begin{equation} \label{BIC}
+    BIC = \ln (n) k - 2 \ln (\hat{L})
+\end{equation}
+
+\begin{equation} \label{HQ}
+    HQ = -2 L_{max} + 2k \ln (\ln (n))
+\end{equation}
+
+Com um modelo com erros estacionários e não serialmente autocorrelacionados e com baixo valor de critério de informação frente a outros modelos, podemos realizar previsões \cite{Hamilton} de valores que extrapolem o período da amostra da série temporal. Note ainda que o modelo \textit{ARIMA} pode ser extendido dependendo das condições da série temporal, tais como sasonalidade ou heteroscedasticidade condicional\cite{Brockwell}, apesar de não ser o foco do presente trabalho. A seguir trataremos da outra abordagem de séries temporais que tem foco na análise preditiva.
+
+\section{Abordagem da estatística preditiva} \label{predictive}
+
+A abordagem da estatística preditiva refere-se ao fato de que o objetivo principal e fundamental desta abordagem é a previsão de valores além dos estabelecidos pela amostra, e, no caso de séries temporais, de valores futuros posteriores ao limite do período da amostra. A instrumentação desta abordagem é a de técnicas de validação cruzada, modelos não lineares, métricas de avaliação por meio do erro da previsão e tomadas fora da amostra em que o modelo foi treinado, com relaxamento da maioria das hipótese tratadas na seção \ref{inferential}. Aprofundaremos a discussão de alguns conceitos iniciais introdutórios.
+
+Inteligência artificial (AI) é a inteligência exibida pelas máquinas - contrastando com a inteligência natural dos humanos - que pode ser implementada por meio de regras pré determinadas por humanos ou por meio de padrões aprendidos com dados históricos, caso do aprendizado de máquina\cite{Oliver}. A maioria dos sistemas de inteligência artificial exibe apenas características de inteligência cognitiva, ou seja, conhecimento por meio de pensamento, experiência ou sentidos. Cada sistema de inteligência artificial tende a focar em uma tarefa específica do conhecimento, chamado de AI aplicada, como por exemplo processamento de linguagem natural, visão computacional, sistemas de detecção de doenças, entre outros, entretanto um dos objetivos de longo prazo é alcançar a chamada inteligência generalista, capaz de exercer uma gama de tarefas cognitivas aplicando uma série de resoluções de problemas\cite{Laird}.
+
+Aprendizado de máquina (ML) é o estudo de modelos estatísticos utilizados de forma a realizar uma determinada tarefa efetivamente sem colocar instruções pré definidas\cite{Samuel}. O conjunto de regras são inferidas a partir de padrões aprendidos por meio de dados históricos da tarefa em questão. Pode ser dividida em três grupos: i) aprendizado supervisionado, em que existem características que são utilizadas para prever uma variável alvo, caso o alvo seja uma variável contínua é dito que o problema é de regressão, caso o alvo seja uma categoria é dito que o problema é de classificação; ii) não supervisionado, em que não existe um alvo propriamente dito a ser previsto, mas o problema consiste em encontrar padrões nos dados, no caso da \textit{clusterização} é agrupando as amostras similares entre si, no caso da redução de dimensionalidade é reduzir o número de características de forma a manter a maior variabilidade/ortogonalidade dos dados; iii) aprendizado por reforço, em que os algoritmos recebem o \textit{feedback} de acordo com suas ações em um ambiente normalmente simulado e dinâmico, muito utilizado no caso de carros autônomos e aprendizado de jogos de tabuleiro e virtuais.
+
+A seguir apresentaremos alguns dos principais algoritimos utilizados em aprendizado de máquina. Posteriormente, apresentaremos o tratamento do sistema proposta para a previsão de séries temporais.
+
+\subsection{Algoritmos preditivos} \label{algos}
+
+O primeiro algoritmo que iremos discutir é o mesmo utilizado na seção \ref{arima} que é a Regressão Linear. Neste caso tentamos prever uma variável alvo $y$ que é um vetor coluna em função de uma matriz $X$ composta de $n$ características\cite{Greene}, como
+
+\begin{equation}
+    y_{i} = \beta_{0} + \beta_{1} x_{i1} + \beta_{2} x_{i2} + ... + \beta_{n} x_{in} + \epsilon_{i}
+\end{equation}
+
+em que $\epsilon$ é o termo de erro que captura todas as relações não lineares ou das variáveis omitidas no modelo. A estimação é feita via método de mínimos quadrados ordinários em que a função objetivo soma quadrada dos resíduos (SQR) deve ser minimizada encontrando os parâmetros $\beta$ ótimos
+
+\begin{equation}
+    SQR = \sum_{i=1}^{N} (y_{i} - \hat{y_{i}})^{2}
+\end{equation}
+
+em que $y_{i}$ é o valor da observação de fato e $\hat{y_{i}}$ é o valor da observação previsto pelo modelo.
+
+O primeiro algoritmo não linear que trataremos é Árvore de Decisão. O algoritmo separa a base de dados no primeiro nó, chamado de raiz, em conjuntos menores, chamados de nós filhos, que juntos compõe um galho, até o momento em que uma nova separação não adicione valor a previsão. Algoritmos geralmente funcionam de "cima para baixo", escolhendo a cada etapa a variável que fará a melhor separação. A métrica do que é melhor é uma medida de homogeneidade da variável alvo dentro dos conjuntos.
+
+Uma destas medidas é o Coeficiente de Impureza de Gini que mede o quão frequentemente uma amostra aleatória estaria no conjunto errado se fosse predita de acordo com a distribuição do alvo neste conjunto. Outra medida é o Ganho de Informação ou divegência de Kullbrack-Leibler\cite{Kullbrack} mede a quantidade de informação ganha sobre o alvo ao utilizar uma das características para separação calculando a entropia do nó pai substraído da soma dos nós filhos ponderados.
+
+De forma geral, podemos representar o modelo de Árvore de Decisão como\cite{James}
+
+\begin{equation}
+    f(X) = \sum_{m=1}^{M} c_{m} \cdot 1_{(X \in R_{m})}
+\end{equation}
+
+em que $R_{1}, ..., R_{m}$ representam partições do espaço de características. Árvores de Decisão são estimadores chamados de "fracos", mas que quando utilizados em conjunto pode ter um grande poder preditivo. Algumas das técnicas para agrupamento destes estimadores são \textit{Bagging}\cite{BreimanBag} - em que cada Árvore de Decisão recebe um subconjunto dos dados e a previsão final é uma média de todos os estimadores, \textit{Florestas Aleatórias}\cite{BreimanRF} - em que cada Árvore recebe um subconjunto dos dados e um subconjuntos das características, \textit{Boosting}\cite{BreimanB} - consiste em encadear uma série de Árvores de Decisão de forma com que cada estimador seja ajustado nos erros do estimador anterior, aprendendo de forma gradual os padrões dos dados.
+
+Máquinas de vetor de suporte é um algoritmo que representa os dados como pontos de um espaço vetorial, separado-os por meio de um ou um conjunto de hiperplanos de tal forma que as diferentes classes fiquem separadas de forma ótima e o mais distantes possível\cite{Cortes}. Além de poder mapear relações lineares entre as variáveis, utilizando o chamado truque do \textit{kernel} é possível capturar relações não lineares mapeando as características para espaços dimensionalmente mais elevados.
+
+Caso os dados sejam linearmente separáveis, pode definir um hiperplano de suporte $\vec{w} \cdot \vec{x_i} - b$, em que dados acima deste hiperplano pertencem a uma classe, e pontos abaixo pertencem a outra classe. Caso os dados não sejam linearmente separáveis, podemos introduzir a função do tipo \textit{hinge loss} que é do tipo $max(0, 1 - \vec{w} \cdot \vec{x_i} - b)$, ou seja, zero caso o vetor $\vec{x_{i}}$ fique do lado correto da margem. Para dados do lado incorreto da margem, o valor da função é proporcional a distância da margem. Assim desejamos minimizar
+
+\begin{equation}
+    \Bigg[ \frac{1}{n} \sum_{i=1}^{n} max(0, 1 - \vec{w} \cdot \vec{x_i} - b) \Bigg] + \delta \|\vec{w}\|^2
+\end{equation}
+
+que é a função \textit{hinge loss} para cada uma das amostras com um parâmetro $\delta$ que determina o \textit{trade-off} entre aumentar o tamanho da margem e garantir que o vetor $\vec{x_{i}}$ fique dentro do lado correto da margem.
+
+subsection{Critérios de avaliação dos modelos} \label{subsection22}
 
 Lorem ipsum
 sit amet
@@ -160,10 +301,69 @@ Lorem ipsum
 sit amet
 
 \begin{thebibliography}{99}
-  \bibliographystyle{unsrt}
+  \bibliographystyle{srt}
 
-\bibitem{someonecited} A. Someone, \textit{Lorem ipsum
-    sit amet vol. 1}, (Consectetur Inc, New York, 1952), 3th ed.
+\bibitem{Gujarati} GUJARATI, D. N.; PORTER, D., \textit{Basic Econometrics}. 5ª ed. Nova Iorque: Mc Graw-Hill/Irwin, 2009.
+
+\bibitem{Brockwell} BROCKWELL, P. J.; DAVID, R. A. \textit{Introduction to Time Series and Forecasting}. 3ª ed. Nova Iorque: Springer, 2016.
+
+\bibitem{Hayashi} HAYASHI, F. \textit{Econometrics}. 1ª ed. Princeton: Princeton University Press, 2000.
+
+\bibitem{Hamilton} HAMILTON, J. D. \textit{Time Series Analysis}. 1ª ed. Princeton: Princeton University Press, 1994.
+
+\bibitem{Enders} ENDERS, W. \textit{Applied Econometric Time Series}. 4ª ed. Tuscaloosa: Wiley, 2014.
+
+\bibitem{Greene} GREENE, W. H. \textit{Econometric Analysis}. 8ª ed. Nova Iorque: Pearson, 2018.
+
+\bibitem{Hyndman} HYNDMAN, R. J., ATHANASOPOULOS, G. \textit{Forecasting: principles and practice}. 2ª ed. Monash: OTexts, 2018.
+
+\bibitem{Yule} YULE, G. U. Why Do We Sometimes Get Nonsense Correlations Between Time Series? A study in sampling and the nature of time series. \textit{Journal of the Royal Statistical Society}, v. 89, p. 1-64, 1926.
+
+\bibitem{Granger-Newbold} GRANGER, C. W. J.; NEWBOLD, P. Spurious Regressions in Econometrics. \textit{Journal of Econometrics}, v. 2, p. 111-120, 1974.
+
+\bibitem{Dicker-Fuller} DICKEY, D. A.; FULLER, W. A. Distribution of the Estimators for Autorregressive Time Series with a Unit Root. \textit{Journal of American Statistical Association}, v. 74, p. 427-431, 1979.
+
+\bibitem{Elliot-Rothenberg-Stock} ELLIOT, G.; ROTHENBERG, T. J.; STOCK, J. H. Efficient tests for an Autorregressive Unit Root. \textit{Econometrica}, v. 64, p. 813-836, 1996.
+
+\bibitem{Phillips-Perron} PHILLIPS, P. C. B.; PERRON, P. Testing for a Unit Root in Time Series Regression. \textit{Biometrika}, v. 75, p. 335-346, 1988.
+
+\bibitem{Kwiatkowski} KWIATKOWSKI, D. et al. Testing the Null Hypothesis of Stationarity Against the Alternative of a Unit Root. \textit{Journal of Econometrics}, v. 54, p. 159-178, 1992.
+
+\bibitem{Brown} BROWN, R. G. \textit{Exponential Smoothing for Predicting Demand}. Cambridge: Arthur D. Little, 1956.
+
+\bibitem{Holt} HOLT, C. C. Forecasting Trends and Seasonality by Exponentially Weighted Averages. \textit{Office of Naval Research Memorandum}, v. 52, 1957.
+
+\bibitem{Winters} WINTERS, P. R. Forecasting Sales by Exponentially Weighted Moving Averages. \textit{Management Science}, v. 6, n. 3, p. 231-362, 1960.
+
+\bibitem{Box-Jenkins} BOX, G. E. P.; JENKINS, G. M. \textit{Time Series Analysis: Forecasting and Control}. São Francisco: Holden-Day, 1976.
+
+\bibitem{Ljung-Box} LJUNG, G. M.; BOX, G. E. On a Measure of Lack of Fit in Time Series Models. \textit{Biometrika}, v. 65, n. 2, p. 297-303, 1978.
+
+\bibitem{Box-Pierce} BOX, G. E.; PIERCE, D. A. Distribution of Residual Autocorrelations in Autoregressive-Integrated Moving Average Time Series Models. \textit{Journal of the American Statistical Association}, v. 65, n. 332, p. 1509-1526, 1970.
+
+\bibitem{Akaike} AKAIKE, H. A new look at the statistical model identification. \textit{IEEE Transactions on Automatic Control}, v. 19, n. 6, p. 716-723, 1974.
+
+\bibitem{Schwarz} SCHWARZ, G. E. Estimating the dimension of a model. \textit{Annals of Statistics}, v. 6, n. 2, p. 461-464, 1978.
+
+\bibitem{Hannan} HANNAN, E. J.; QUINN, B. G. The Determination of the Order of an Autoregression. \textit{Journal of the Royal Statistical Society}, v. 41, p. 190-195, 1979.
+
+\bibitem{Oliver} OLIVER, T. \textit{Machine Learning for Absolute Beginners: a plain english introduction}. 1ª ed. Online: Theobald Oliver, 2017.
+
+\bibitem{Laird} LAIRD, J. E.; NEWELL, A.; ROSENBLOOM, P. S. SOAR: an architecture for general intelligence. \textit{Artificial Intelligence}, v. 33, n. 1, p. 1-64, 1987.
+
+\bibitem{Samuel} SAMUEL, A. Some Studies in Machine Learning Using the Game of Checkers. \textit{IBM Journal of Research and Development}, v. 3, n. 3, p. 210-229, 1959.
+
+\bibitem{Kullbrack} KULLBRACK, S.; LEIBLER, R. A. On Information and Sufficiency. \textit{Annals of Mathematical Statistics}, v. 22, n. 1, p. 79-86, 1951.
+
+\bibitem{James} JAMES, G. et al. \textit{An Introduction to Statistical Learning: with application in R}. Nova Iorque: Springer, 2013.
+
+\bibitem{BreimanBag} BREIMAN, L. Bagging Predictors. \textit{Machine Learning}, v. 24, n. 2, p. 123-140, 1996.
+
+\bibitem{BreimanRF} BREIMAN, L. Random Forests. \textit{Machine Learning}, v. 45, n. 1, p. 5-32, 2001.
+
+\bibitem{BreimanB} BREIMAN, L. Arcing Classifier. \textit{Annals of Statistics}, v. 26, n. 3, p. 801–849, 1998.
+
+\bibitem{Cortes} CORTES, C.; VAPNIK, V. N. Supporte-Vector Networks. \textit{Machine Learning}, v. 20, n. 3, p. 272-297, 1995.
 
 \end{thebibliography}
 
