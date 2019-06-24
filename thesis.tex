@@ -275,7 +275,7 @@ De forma geral, podemos representar o modelo de Árvore de Decisão como\cite{Ja
 
 em que $R_{1}, ..., R_{m}$ representam partições do espaço de características. Árvores de Decisão são estimadores chamados de "fracos", mas que quando utilizados em conjunto pode ter um grande poder preditivo. Algumas das técnicas para agrupamento destes estimadores são \textit{Bagging}\cite{BreimanBag} - em que cada Árvore de Decisão recebe um subconjunto dos dados e a previsão final é uma média de todos os estimadores, \textit{Florestas Aleatórias}\cite{BreimanRF} - em que cada Árvore recebe um subconjunto dos dados e um subconjuntos das características, \textit{Boosting}\cite{BreimanB} - consiste em encadear uma série de Árvores de Decisão de forma com que cada estimador seja ajustado nos erros do estimador anterior, aprendendo de forma gradual os padrões dos dados.
 
-Máquinas de vetor de suporte é um algoritmo que representa os dados como pontos de um espaço vetorial, separado-os por meio de um ou um conjunto de hiperplanos de tal forma que as diferentes classes fiquem separadas de forma ótima e o mais distantes possível\cite{Cortes}. Além de poder mapear relações lineares entre as variáveis, utilizando o chamado truque do \textit{kernel} é possível capturar relações não lineares mapeando as características para espaços dimensionalmente mais elevados.
+Máquinas de vetor de suporte é um algoritmo que representa os dados como pontos de um espaço vetorial, separado-os por meio de um ou um conjunto de hiperplanos de tal forma que as diferentes classes fiquem separadas de forma ótima e o mais distantes possível\cite{Cortes}. Além de poder mapear relações lineares entre as variáveis, utilizando o chamado truque do \textit{kernel}\cite{Aizerman} é possível capturar relações não lineares mapeando as características para espaços dimensionalmente mais elevados.
 
 Caso os dados sejam linearmente separáveis, pode definir um hiperplano de suporte $\vec{w} \cdot \vec{x_i} - b$, em que dados acima deste hiperplano pertencem a uma classe, e pontos abaixo pertencem a outra classe. Caso os dados não sejam linearmente separáveis, podemos introduzir a função do tipo \textit{hinge loss} que é do tipo $max(0, 1 - \vec{w} \cdot \vec{x_i} - b)$, ou seja, zero caso o vetor $\vec{x_{i}}$ fique do lado correto da margem. Para dados do lado incorreto da margem, o valor da função é proporcional a distância da margem. Assim desejamos minimizar
 
@@ -285,7 +285,9 @@ Caso os dados sejam linearmente separáveis, pode definir um hiperplano de supor
 
 que é a função \textit{hinge loss} para cada uma das amostras com um parâmetro $\delta$ que determina o \textit{trade-off} entre aumentar o tamanho da margem e garantir que o vetor $\vec{x_{i}}$ fique dentro do lado correto da margem.
 
-subsection{Critérios de avaliação dos modelos} \label{subsection22}
+Redes neurais profundas
+
+\subsection{Critérios de avaliação dos modelos} \label{subsection22}
 
 Lorem ipsum
 sit amet
@@ -364,6 +366,8 @@ sit amet
 \bibitem{BreimanB} BREIMAN, L. Arcing Classifier. \textit{Annals of Statistics}, v. 26, n. 3, p. 801–849, 1998.
 
 \bibitem{Cortes} CORTES, C.; VAPNIK, V. N. Supporte-Vector Networks. \textit{Machine Learning}, v. 20, n. 3, p. 272-297, 1995.
+
+\bibitem{Aizerman} AIZERMAN, M. A.; BRAVERMAN, E. M.; ROZONOER, L. I. Theoretical Foundations of the Potential Function Method in Pattern Recognition Learning. \textit{Automation and Remote Control}, v. 25, p. 821-837, 1964.
 
 \end{thebibliography}
 
