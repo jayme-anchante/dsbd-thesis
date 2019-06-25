@@ -221,18 +221,14 @@ em que o processo possui zero ou mais componentes autorregressivos, um termo de 
 
 A primeira parte na identificação dos parâmetros é garantir que a série seja estacionária, para isso podem ser realizados um ou mais dos testes discutidos na seção \ref{unit_root}. Assim que a série for estacionária, podemos proceder a identificação dos parâmetros \textit{p} e \textit{q} utilizando correlogramas. O correlograma de função de autocorrelação (ACF) mede a correlação entre uma variável aleatória e uma de suas defasagens no período $k$. O correlograma de função parcial de autocorrelação (PACF) mede a correlação entre uma variável aleatória e uma de suas defasagens no período $k$, mas controlando por todas as defasagens entre o momento presente $t$ e a defasagem $k$. De maneira geral, um processo \textit{AR(p)} decai exponencialmente no ACF e possui picos até a defasagem \textit{p}, um processo \textit{MA(q)} decai exponencialmente no PACF e possui picos até a defasagem \textit{q} e um processo \textit{ARMA(p, q)} decai exponencialmente em ambos os correlogramas.Note que o processo de identificação muitas vezes é mais uma arte que um processo completamente objetivo\cite{Enders}.
 
-A estimação do modelo \textit{ARIMA(p, d, q)} pode ser feita via método de Mínimo Quadrados Ordinários. Para diagnóstico do modelo, podemos utilizar os resíduos da regressão e realizar os testes de raiz unitária mencionados na seção \ref{unit_root} e ainda realizar os testes de autocorrelação serial de Box-Pierce\cite{Box-Pierce} ou de Ljung-Box\cite{Ljung-Box}. Ainda, poderiam ser utilizados os critérios de informação para seleção de modelos com diferentes configurações de parâmetros, assim quanto menor o valor do critérios de informação mais parcimoniosos são os modelos e melhor a qualidade do ajuste. Por exemplo, o critério de informação de Akaike\cite{Akaike} conhecido como AIC\ref{AIC} em que o valor depende diretamento do número de parâmetros incluídos no modelo e inversamente proporcional ao valor da máxima verossimilhança. O critério de informação de Schwarz\cite{Schwarz} é conhecido como BIC\ref{BIC} por ter sido feito um argumento Bayesiano no artigo seminal de Schwarz, ele depende diretamento do número de amostras e do número de parâmetros e inversamente da máxima verossimilhança. O critério de Hannan-Quinn\cite{Hannan} conhecido como HQ\ref{HQ} depende do número de parâmetros e do número do valor de amostras duplo \textit{log}, garantindo consistência do critério, e inversamente proporcional a máxima verossimilhança.
+A estimação do modelo \textit{ARIMA(p, d, q)} pode ser feita via método de Mínimo Quadrados Ordinários. Para diagnóstico do modelo, podemos utilizar os resíduos da regressão e realizar os testes de raiz unitária mencionados na seção \ref{unit_root} e ainda realizar os testes de autocorrelação serial de Box-Pierce\cite{Box-Pierce} ou de Ljung-Box\cite{Ljung-Box}. Ainda, poderiam ser utilizados os critérios de informação para seleção de modelos com diferentes configurações de parâmetros, assim quanto menor o valor do critérios de informação mais parcimoniosos são os modelos e melhor a qualidade do ajuste. Por exemplo, o critério de informação de Akaike\cite{Akaike} conhecido como AIC em que o valor depende diretamento do número de parâmetros incluídos no modelo e inversamente proporcional ao valor da máxima verossimilhança. O critério de informação de Schwarz\cite{Schwarz} é conhecido como BIC por ter sido feito um argumento Bayesiano no artigo seminal de Schwarz, ele depende diretamento do número de amostras e do número de parâmetros e inversamente da máxima verossimilhança. O critério de Hannan-Quinn\cite{Hannan} conhecido como HQ depende do número de parâmetros e do número do valor de amostras duplo \textit{log}, garantindo consistência do critério, e inversamente proporcional a máxima verossimilhança.
 
-\begin{equation} \label{AIC}
-    AIC = 2k + 2 \ln (\hat{L})
-\end{equation}
-
-\begin{equation} \label{BIC}
-    BIC = \ln (n) k - 2 \ln (\hat{L})
-\end{equation}
-
-\begin{equation} \label{HQ}
-    HQ = -2 L_{max} + 2k \ln (\ln (n))
+\begin{equation}
+    \begin{split}
+        & AIC = 2k + 2 \ln (\hat{L}) \\
+        & BIC = \ln (n) k - 2 \ln (\hat{L}) \\
+        & HQ = -2 L_{max} + 2k \ln (\ln (n)) \\
+    \end{split}
 \end{equation}
 
 Com um modelo com erros estacionários e não serialmente autocorrelacionados e com baixo valor de critério de informação frente a outros modelos, podemos realizar previsões \cite{Hamilton} de valores que extrapolem o período da amostra da série temporal. Note ainda que o modelo \textit{ARIMA} pode ser extendido dependendo das condições da série temporal, tais como sasonalidade ou heteroscedasticidade condicional\cite{Brockwell}, apesar de não ser o foco do presente trabalho. A seguir trataremos da outra abordagem de séries temporais que tem foco na análise preditiva.
@@ -299,9 +295,9 @@ Uma rede neural pode ser entendida como um problema de duas etapas. As caracter�
 
 \begin{equation}
     \begin{split}
-    Z_{m} = \sigma (\alpha_{0m} + \alpha_{m}^{T} X  ), \qquad m=1,...,M \\
-    T_{k} = \beta_{0k} + \beta_{k}^{T}Z, \qquad k=1,...,K \\
-    f_{k}(X) = g_{k}(T), \qquad k=1,...,K
+        & Z_{m} = \sigma (\alpha_{0m} + \alpha_{m}^{T} X  ), \qquad m=1,...,M \\
+        & T_{k} = \beta_{0k} + \beta_{k}^{T}Z, \qquad k=1,...,K \\
+        & f_{k}(X) = g_{k}(T), \qquad k=1,...,K
     \end{split}
 \end{equation}
 
@@ -309,6 +305,21 @@ alguns tipos de funções de ativação $\sigma(v)$ normalmente escolhidos são 
 
 \subsection{Critérios de avaliação dos modelos} \label{subsection22}
 
+Uma das etapas mais importantes para avaliação e validação de modelos é a separação e amostragem da base de dados. Existem várias estratégias se amostragem, incluindo \textit{bootstrap}, "deixar um de fora", validação cruzada com $k$ dobras, \textit{hold-out}. Independente da estratégia, usualmente os dados são divididos entre três partes: base de treinamento, base de validação, e base de teste\cite{James}.
+
+A base de treinamento é a base em que os algoritmos são testados assim como diversas configurações de hiperparâmetros para cada algoritmo. A base de treinamento pode ser dividida utilizando uma das estratégias de subamostragem mencionadas anteriormentes para que o algoritmo não fique sobreajustado nestes dados e consiga generalizar frente a novos dados. Uma vez escolhido o algoritmo mais adequado com a melhor configuração de hiperparâmetros, podemos ajustá-lo em cima de toda a base de treinamento, mas verificando a performance dele a cada certa quantidade de iterações, épocas ou etapas de aprendizado na base de validação para garantir novamente que o modelo não acabe sobreajustando os dados de treinamento, utilizando um certo critério de parada que faça com que o algoritmo pare de aprender os padrões dos dados caso o erro de validação não caia mais.
+
+A última etapa de verificação de performance do algoritmo consiste em fazer uma predição na base de teste, também chamada de conjunto \textit{hold-out}, já que são dados nunca antes vistos pelo algoritmo. Assim, tenta-se reproduzir um cenário em que novos dados cuja variável alvo é totalmente desconhecida devem ser preditos, a diferença sendo que neste teste controlado sabemos o real valor da variável alvo.
+
+Discutiremos algumas das métricas de performance mais utilizadas no contexto de regressão. O Erro Absoluto Médio (MAE) é a diferença entre o real valor da variável alvo e o valor predito pelo modelo. O Erro Quadrático Médio é semelhante ao MAE, mas a diferença é elevada ao quadrado, penalizando predições com maior erro. O Erro Quadrático Logarítmico Médio (MSLE) toma o log dos valores tanto da variável alvo quanto das predições, assim a variância é medida numa escala logarítmica, é utilizada para não penalizar grandes diferenças entre os valores do alvo e os valores previstos, quando ambos estão em uma escala relativamente grande.
+
+\begin{equation}
+    \begin{split}
+        & MAE = \sum_{i=1}^{n} (y_{i} - \hat{y_{i}}) / n \\
+        & MSE = \sum_{i=1}^{n} (y_{i} - \hat{y_{i}})^2 / n \\
+        & MSLE = \sum_{i=1}^{n} (\log(1 + y_{i}) - \log(1 + \hat{y_{i}}))^2 / n \\
+    \end{split}
+\end{equation}
 
 \section{Benchmark} \label{section3}
 
