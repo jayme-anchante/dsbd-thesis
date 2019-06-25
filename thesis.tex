@@ -263,7 +263,15 @@ em que $\epsilon$ é o termo de erro que captura todas as relações não linear
 
 em que $y_{i}$ é o valor da observação de fato e $\hat{y_{i}}$ é o valor da observação previsto pelo modelo.
 
-O primeiro algoritmo não linear que trataremos é Árvore de Decisão. O algoritmo separa a base de dados no primeiro nó, chamado de raiz, em conjuntos menores, chamados de nós filhos, que juntos compõe um galho, até o momento em que uma nova separação não adicione valor a previsão. Algoritmos geralmente funcionam de "cima para baixo", escolhendo a cada etapa a variável que fará a melhor separação. A métrica do que é melhor é uma medida de homogeneidade da variável alvo dentro dos conjuntos.
+O primeiro algoritmo não linear que trataremos é $k$ Vizinhos Próximos. É um algoritmo do tipo baseado em aprendizado de instâncias ou aprendizado preguiçoso - já que é baseado em memória e não necessita que nenhum modelo seja ajustado. Dado um novo ponto $k_{0}$, encontra-se os $k$ pontos $x_{r}, r=1,...,k$ de treinamento mais próximos em distância a $x_{0}$ e atribuímos um valor ao novo ponto usando algum tipo de média. Assumindo que as características tem valores reais\cite{Hastie}
+
+\begin{equation}
+    d_{i} = \| x_{i} - x_{0} \|
+\end{equation}
+
+podemos utilizar a distância euclidiano como mostrado acima. Tipicamente padronizamos cada uma das características para que tenham escalas similares. Quando utilizamos $k=1$ - apenas o vizinho mais próximo - temos um sistema com viés baixo mas uma variância elevada, situação que vai ficando menos acentuada a medida que acrescentamos mais vizinhos.
+
+Árvores de Decisão separam a base de dados no primeiro nó, chamado de raiz, em conjuntos menores, chamados de nós filhos, que juntos compõe um galho, até o momento em que uma nova separação não adicione valor a previsão. Algoritmos geralmente funcionam de "cima para baixo", escolhendo a cada etapa a variável que fará a melhor separação. A métrica do que é melhor é uma medida de homogeneidade da variável alvo dentro dos conjuntos.
 
 Uma destas medidas é o Coeficiente de Impureza de Gini que mede o quão frequentemente uma amostra aleatória estaria no conjunto errado se fosse predita de acordo com a distribuição do alvo neste conjunto. Outra medida é o Ganho de Informação ou divegência de Kullbrack-Leibler\cite{Kullbrack} mede a quantidade de informação ganha sobre o alvo ao utilizar uma das características para separação calculando a entropia do nó pai substraído da soma dos nós filhos ponderados.
 
@@ -287,10 +295,20 @@ que é a função \textit{hinge loss} para cada uma das amostras com um parâmet
 
 Redes neurais artificiais são sistemas com estrutura inspirada nas redes neurais biológicas que constituem o cérebro. A rede neural é constituída por uma série de unidades ou nós chamados de neurônios artificiais que normalmente são completamente conectados entre si. Cada conexão transmiti o sinal de um neurônio para o outro, o neurônio que recebe o sinal é capaz de processá-lo e passá-lo aos neurônios seguintes conectados. Normalmente o sinal é um número real e o sinal enviado é um calculado por uma função não linear - conhecida como função de ativação - da soma dos sinais recebidos. As conexões entre os neurônios é chamada de aresta, os neurônios e as arestas tem um peso que é ajustado conforme o aprendizado avança, sendo que o peso pode aumentar ou reduzir o sinal numa conexão. Normalmente, os neurônios estão agrupados em camadas, sendo a primeira camada chamada de camada de entrada e a camada final a camada de saída\cite{James}. Redes neurais profundas fazem parte de uma classe de algoritmos conhecidos como aprendizado profundo, em contraste com o aprendizado raso descrito nos algoritmos anteriores, quando as redes neurais possuem camadas entre as de entrada e de saída - conhecidas como camadas escondidas - que atuam como extratoras de características dos dados brutos de entrada, retirando parte do problema do usuário de manualmente extrair características relevantes dos dados.
 
+Uma rede neural pode ser entendida como um problema de duas etapas. As características derivadas $Z_{m}$ de combinações lineares dos dados de entrada, cada camada $T$ é uma combinação linear das características derivadas, os dados de saída são uma função linear da última camada escondida\cite{Hastie}
+
+\begin{equation}
+    \begin{split}
+    Z_{m} = \sigma (\alpha_{0m} + \alpha_{m}^{T} X  ), \qquad m=1,...,M \\
+    T_{k} = \beta_{0k} + \beta_{k}^{T}Z, \qquad k=1,...,K \\
+    f_{k}(X) = g_{k}(T), \qquad k=1,...,K
+    \end{split}
+\end{equation}
+
+alguns tipos de funções de ativação $\sigma(v)$ normalmente escolhidos são sigmóide, base radial Gaussiana, retificação linear. A função de ativação na camada de saída $g_{k}(T)$ permite uma transformação final, que no caso da regressão é a função identidade. Alguns desafios no treinamento de redes neurais são a escolha dos valores iniciais dos pesos que pode impactar no otimização posterior, sobreajustamento nos dados ficando "viciado" nos dados de treinamento ao permanecer num mínimo local, escala dos dados de entrada pois uma característica numa escala maior pode acabar dominando as demais características, a escolha do número de camadas e número de neurônios por camada e finalmente diversos mínimos locais, não convergindo para um mínimo global\cite{Hastie}.
+
 \subsection{Critérios de avaliação dos modelos} \label{subsection22}
 
-Lorem ipsum
-sit amet
 
 \section{Benchmark} \label{section3}
 
@@ -368,6 +386,8 @@ sit amet
 \bibitem{Cortes} CORTES, C.; VAPNIK, V. N. Supporte-Vector Networks. \textit{Machine Learning}, v. 20, n. 3, p. 272-297, 1995.
 
 \bibitem{Aizerman} AIZERMAN, M. A.; BRAVERMAN, E. M.; ROZONOER, L. I. Theoretical Foundations of the Potential Function Method in Pattern Recognition Learning. \textit{Automation and Remote Control}, v. 25, p. 821-837, 1964.
+
+\bibitem{Hastie} HASTIE, T.; TIBSHIRANI, R.; FRIEDMAN, J. \textit{The Elements of Statistical Learning: data mining, inference and prediction}. 2ª ed. Nova Iorque: Springer, 2009.
 
 \end{thebibliography}
 
