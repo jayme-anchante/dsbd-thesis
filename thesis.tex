@@ -113,7 +113,7 @@ Ainda, as técnicas de séries temporais podem ser divididas entre paramétricas
 Por fim, a análise pode ser feita de forma univariada ou multivariada. O caso univariado trata de apenas uma série temporal, única e exclusivamente, enquanto que no caso multivariado, uma ou mais variáveis que podem ter uma relação de dependência são analisadas simultaneamente. Trataremos apenas do caso univariado.
 
 
-O presente trabalho está organizado como se segue: analisaremos a forma como a estatística inferencial e como a estatística preditiva modelam séries temporais nas seções 1 e 2, respectivamente, além de uma introdução de cada abordagem, cada seção também disporá de duas subseções que tratarão dos principais modelos utilizados assim como as medidas de sucesso de cada abordagem. A seção 3 mostrará um benchmark das duas abordagens predizendo bases de dados amplamente utilizadas trabalhos acadêmicos ou medidas bastante populares.
+O presente trabalho está organizado como se segue: analisaremos a forma como a estatística inferencial e como a estatística preditiva modelam séries temporais nas seções \ref{inferential} e \ref{predictive}, respectivamente, além de uma introdução de cada abordagem, cada seção também disporá de subseções que tratarão dos principais modelos utilizados assim como as medidas de sucesso de cada abordagem. A seção \ref{nostradamus} mostrará um benchmark das duas abordagens predizendo bases de dados amplamente utilizadas trabalhos acadêmicos ou medidas bastante populares.
 
 \section{Abordagem da estatística inferencial} \label{inferential}
 
@@ -321,10 +321,81 @@ Discutiremos algumas das métricas de performance mais utilizadas no contexto de
     \end{split}
 \end{equation}
 
-\section{Benchmark} \label{section3}
+\section{Plataforma automatizada de predição de séries temporais Nostradamus} \label{nostradamus}
 
-Lorem ipsum
-sit amet
+Após apresentar alguns dos principais conceitos das abordagens inferencial e preditiva em relação a séries temporais, iremos aprensentar uma proposta de sistema automatizado de previsão de séries temporais que tenta unir conceitos de ambas abordagens. Abstrair o máximo possível as questões técnicas relativas ao tratamento de séries temporais, como o processamento dos dados, construção de características, modelagem, validação e previsão.
+
+Todo o sistema pode ser definido numa função objetivo genérica tal que
+
+\begin{equation}
+    \begin{split}
+        & \min \quad MAE = f(FE(p), Algo(HP)) \\
+        & \text{tal que} \qquad p <= n / 20 \\
+        & \qquad \qquad \quad Algo(HP) \to Data \\
+    \end{split}
+\end{equation}
+
+em que o objetivo é minimizar o Erro Absoluto Médio (MAE em inglês) das previsões de acordo com uma função de $FE$, do inglês \textit{Feature Engineering}, ou Engenharia de Características e de um $Algo$ ou algoritmo que tem $HP$, do inglês \textit{hyperparameters}, ou hiperparâmetros. A primeira restrição significa que a ordem $p$ da engenharia de características não deve exceder a vigésima parte do número de dados da série temporal. Já a segunda restrição afirma que os hiperparâmetros específicos de um algoritmo devem satisfazer as restrições impostas pela base de dados (número de colunas, intervalo de valores etc).
+
+Como engenharia de características, é feita uma transformação da série temporal em um processo autorregressivo \textit{AR(p)}
+
+\begin{table}[!htb]
+    \caption{Transformação dos dados em processo AR(p)}
+    \begin{minipage}{.5\linewidth}
+      \caption{Dados originais}
+      \centering
+        \begin{tabular}{ll}\label{rawdata}
+            $t$ & $valor$ \\
+            0 & 10 \\
+            1 & 11 \\
+            2 & 12 \\
+            3 & 13 \\
+            4 & 14 \\
+            5 & 15 \\
+            6 & 16 \\
+            7 & 17 \\
+            8 & 18 \\
+            9 & 19 \\
+        \end{tabular}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+      \centering
+        \caption{Dados AR(2)}
+        \begin{tabular}{lll}\label{AR2}
+            $x_{t-2}$ & $x_{t-1}$ & $Y$ \\
+            10 & 11 & 12 \\
+            11 & 12 & 13 \\
+            12 & 13 & 14 \\
+            13 & 14 & 15 \\
+            14 & 15 & 16 \\
+            15 & 16 & 17 \\
+            16 & 17 & 18 \\
+            17 & 18 & 19 \\
+        \end{tabular}
+    \end{minipage} 
+\end{table}
+
+No caso da série temporal original na tabela \ref{rawdata}, temos que a primeira coluna $t$ é uma contagem dos períodos e a segundo coluna é o valor em si da série temporal. Na tabela \ref{AR2}, temos que as colunas $x_{t-2}$ e $x_{t-1}$ representam as defasagens 2 e 1, respectivamente, de um processo $AR(2)$, que também podem ser entendidos como as características ou dados de entrada do modelo, já a coluna $Y$ é a série temporal no tempo presente $t$, que também pode ser entendida como a variável alvo. Importante notar que a série temporal original possuía 10 linhas ou amostras, já os dados transformados possuíam 8 linhas ou amostras, se tivéssemos feito um processo do tipo $AR(3)$, os dados transformados possuiriam 7 linhas. Podemos dizer que há um \textit{trade-off} entre tamanho e profundidade da base de dados transformada: quanto maior o grau do processo $AR$ maior a capacidade de capturar padrões passados que podem ajudar a explicar os valores presentes da série temporal, contudo menor a quantidade de dados disponíveis para o modelo treinar e aprender sobre os padrões dos dados.
+
+Os algoritmos preditivos implementados pela plataforma são: regressão linear, elasticnet (uma regressão linear com regularização L1 e L2), florestas aleatórias, $k$ vizinhos próximos, rede neural profunda, implementados pela biblioteca \textit{scikit-learn}\cite{Pedregosa}; um algoritmo de impulso de gradiente extremo baseado em árvore de decisão com \textit{boosting} chamado de XGBoost\cite{Chen}.
+
+\subsection{Benchmark da plataforma em bases de dados} \label{benchmark}
+
+\begin{table}[!htb]
+    \caption{Hello}
+    \center
+    \begin{tabular}{lll}
+        $ARIMA$ & $Prophet$ & $Nostradamus$ \\
+        1 & 2 & 3  \\
+        1 & 2 & 3  \\
+        1 & 2 & 3  \\
+        1 & 2 & 3  \\
+        1 & 2 & 3  \\
+        1 & 2 & 3  \\
+        1 & 2 & 3  \\
+        1 & 2 & 3  \\
+    \end{tabular}
+\end{table}
 
 \section{Conclusão}
 
@@ -399,6 +470,10 @@ sit amet
 \bibitem{Aizerman} AIZERMAN, M. A.; BRAVERMAN, E. M.; ROZONOER, L. I. Theoretical Foundations of the Potential Function Method in Pattern Recognition Learning. \textit{Automation and Remote Control}, v. 25, p. 821-837, 1964.
 
 \bibitem{Hastie} HASTIE, T.; TIBSHIRANI, R.; FRIEDMAN, J. \textit{The Elements of Statistical Learning: data mining, inference and prediction}. 2ª ed. Nova Iorque: Springer, 2009.
+
+\bibitem{Chen} CHEN, T.; GUESTRIN, C. (2016). XGBoost: A Scalable Tree Boosting System. In: PROCESSIDINGS OF THE 22nd ACM SIGKDD INTERNACIONAL CONFERENCE ON KNOWLEDGE DISCOVERY AND DATA MINING. São Francisco. \textit{Anais}... São Francisco, CA, USA: ACM, 13-17 Agosto de 2016. p. 785–794. arXiv:1603.02754.
+
+\bibitem{Pedregosa} PEDREGOSA, F. et al. Scikit-learn: Machine Learning in Python. \textit{Journal of Machine Learning Research}, v. 12, p. 2825-2830, 2011.
 
 \end{thebibliography}
 
