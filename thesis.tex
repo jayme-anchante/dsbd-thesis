@@ -35,7 +35,7 @@
 \newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
 
 \titulocabecalho{Nostradamus: plataforma de aprendizado de máquina como um serviço para tratamente, análise, visualização e previsão de séries temporais providas pelo usuário}
-\autorcabecalho{J. T. Anchante and A. R. A. Grégio}
+\autorcabecalho{J. T. Anchante e A. R. A. Grégio}
 
 \numeracao{01}
 \volume{01}
@@ -75,21 +75,18 @@
   % \end{center}
 
   \begin{abstract}
-    Lorem ipsum
-    sit amet
+    O presente trabalho apresenta uma proposta de sistema automatizado de previsão de séries temporais chamado Nostradamus. Inicia-se o trabalho apresentando os principais conceitos de séries temporais, principais características e formas de tratamento. Em seguida, expôs-se o que se chamou de abordagem da estatística inferencial e de abordagem da estatística preditiva e as formas de tratamento e previsão de séries temporais de cada uma. Posteriormente, propôs-se o sistema automatizado Nostradamus, discutindo a forma de otimização e as etapas que o sistema percorre para alcançar a previsão final. No benchmark em sete bases de dados de séries temporais, o sistema Nostradamus alcançou o melhor resultado em cinco delas.
     \palavraschave{aprendizado de máquina, automl,
-      séries temporais, aprendizado profundo}
+      séries temporais}
 
   \end{abstract}
 
   \begin{otherlanguage}{english}
 
-
     \begin{abstract}
-      Lorem ipsum
-      sit amet
+      The present work presents a proposition of automated time series forecasting system called Nostradamus. First we introduce the main concepts of time series, main characteristics e treatments. Afterwards, we discuss what we called inferential statistics and predictive statistics approaches and the way each treat and forecast time series. Then, we propose the automated Nostradamus system, discussing the optimization and the steps the system make to reach the final forecast. In the benchmark with seven time series databases, the Nostradamus system reached the best result in five of them.
       \keywords{machine learning, automl,
-        time series, deep learning}
+        time Series}
 
     \end{abstract}
   \end{otherlanguage}
@@ -385,26 +382,49 @@ Adotou-se uma estratégia de separação da série temporal entre trainamento e 
 
 \subsection{Benchmark da plataforma em bases de dados} \label{benchmark}
 
+Nesta seção mostraremos o resultado de um \textit{benchmark} de três \textit{frameworks} na previsão de 7 séries temporais. O primeiro \textit{framework} é a própria plataforma Nostradamus proposta no presente trabalho, o segundo é uma implementação em Python pela biblioteca \textit{pmdarima} da função \textit{auto.arima} da biblioteca \textit{forecast} de R, o terceiro é um algoritmo chamado de \textit{Prophet} baseado em simulação de Monte Carlo implementado pela biblioteca \textit{Prophet}.
+
+As séries temporais utilizadas como \textit{benchmark} são: \textit{sunspots}, número de manchas solares por ano entre 1700 e 2008; \textit{airpassengers}, número mensal de passageiros de vôos de avião; \textit{austres}, dados residenciais trimestrais; \textit{heartrate}, frequência cardíaca; \textit{lynx}, número de linces capturados por ano no Canadá entre 1821 e 1934; \textit{wineind}, vendas de vinho da indústria australiana; e \textit{woolynrnq}, produção trimestral de lã na Austrália. Foram separados os dez por cento dos pontos mais recentes de cada conjunto de dados como base de teste e cada \textit{framework} recebeu os noventa por cento de dados restantes para treinamento.
+
+A seguir reportamos o erro absoluto médio de cada uma das bases de dados para cada um dos sistemas testados:
+
 \begin{table}[!htb]
     \caption{Hello}
     \center
-    \begin{tabular}{lll}
-        $ARIMA$ & $Prophet$ & $Nostradamus$ \\
-        1 & 2 & 3  \\
-        1 & 2 & 3  \\
-        1 & 2 & 3  \\
-        1 & 2 & 3  \\
-        1 & 2 & 3  \\
-        1 & 2 & 3  \\
-        1 & 2 & 3  \\
-        1 & 2 & 3  \\
+    \begin{tabular}{llll}
+	    Base & Nostradamus & ARIMA & Prophet \\
+	    sunspots & 18.93 & 44.41 & 45.50  \\
+	    airpassengers & 88.74 & 39.35 & 57.93 \\
+	    austres & 41.74 & 56.43 & 115.42  \\
+	    heartrate & 1.64 & 2.01 & 2.16  \\
+	    lynx & 198.49 & 652.95 & 967.96  \\
+	    wineind & 5939.42 & 3817.89 & 3762.36  \\
+	    woolnrq & 426.8 & 427.38 & 592.50  \\
     \end{tabular}
 \end{table}
 
+Vemos que o sistema Nostradamus teve o menor erro absoluto médio em 5 das 7 bases de dados, \textit{sunspots}, \textit{austres}, \textit{heartrate}, \textit{lynx}, \textit{woolnrq}. O modelo ARIMA teve o menor erro na base \textit{airpassengers}. O modelo \textit{Prophet} teve o menor erro na base \textit{wineind}. Nota-se que nas bases em que o sistema Nostramus não obteve o melhor resultado, seu erro foi consideravelmente mais elevado que os demais modelos. Para entender melhor o comportamento de cada previsão em relação a série temporal que ocorreu de fato, mostra-se duas figuras, a primeira em que Nostradamus obteve o melhor resultado, enquanto a segunda teve a pior performance
+
+\begin{figure}[!htb]
+	\centering \includegraphics[scale=0.3]{fig1.png}
+	\caption{Previsão de cada sistema na base \textit{sunspots} nos 10\% da base reservados para teste}
+	\label{fig1}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering \includegraphics[scale=0.3]{fig2.png}
+	\caption{Previsão de cada sistema na base \textit{wineind} nos 10\% da base reservados para teste}
+	\label{fig2}
+\end{figure}
+
+Nota-se que, em geral, o sistema Nostradamus tenta ajustar os padrões de ambas as séries temporais, já o \textit{Prophet} e o \textit{ARIMA} acaba convergindo suas previsões em torno da média dos dados. Na figura \ref{fig1}, é possível ver que o sistema Nostradamus é bem sucedido no seu ajuste, pois obteve o menor erro médio e pode-se observar que segue o comportamento da série. Entretanto, na figura \ref{fig2}, apesar de relativamente seguir o padrão da série, o sistem faz isso de forma mais rápida do que as mudanças realmente ocorrem, o que acaba gerando uma previsão com erro maior do que a previsão "conservadora" da média dos dados.
+
 \section{Conclusão}
 
-Lorem ipsum
-sit amet
+Iniciamos o presente trabalho introduzindo alguns dos principais conceitos em relação a dados, a séries temporais e suas características, tipos de abordagens para sua modelagem, assim como a estruturação o trabalho. A seguir, expôs-se a forma do que chamou-se de abordagem da estatística inferencial trata a modelagem de séries temporais, conceitos como estacionariedade, tipos de processos, regressão espúria, processos de raiz unitária e uma explicação do modelo ARIMA. Posteriormente, expôs-se a forma do que chamou-se de abordagem da estatística preditiva no contexto geral de previsão, discutindo alguns dos principais algoritmos , como regressão linear, $k$ vizinhos próximos, árvore de decisão, máquinas de suporte de vetor e redes neurais profundas. Por fim, expôs-se uma proposta de sistema que automatiza a previsão de séries temporais que une conceitos de engenharia de características usando processos autorregressivos e algoritmos preditivos. Por fim, testamos o sistema proposto pelo presente trabalho comparando-o com outros dois algoritmos em algumas bases de dados de séries temporais.
+
+Verificou-se que o sistema proposto conseguiu atingir uma performance relativamente boa, alcançando o menor erro na base de teste em cinco das sete bases de dados, além de tentar prever, mesmo que não satisfatoriamente, o padrão das demais séries. O trabalho pode ser expandido de diversas formas: utilização de outras formas de pré processamento dos dados, como normalização, padronização, tomar o logarítmo da série; criação de outras características ligadas a sazonalidade e a temporalidade dos dados, como dia da semana, semana do ano, mês do ano no casa de dados diários, por exemplo; utilização de outros algoritmos preditivos, como redes neurais com estrutura \textit{Long Short-Term Memory}.
+
 
 \begin{thebibliography}{99}
   \bibliographystyle{srt}
